@@ -15,7 +15,9 @@ return new class extends Migration
             $table->integer('id_booking')->primary()->autoIncrement();
             $table->string('invoice_number', 50)->nullable();
             $table->date('check_in')->nullable();
-            $table->enum('status', ['pending', 'confirmed', 'cancelled', 'refund'])->nullable();
+            $table->date('check_out')->nullable();
+            $table->decimal('total_price', 10)->nullable();
+            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->nullable();
             $table->dateTime('created_at')->nullable();
             $table->integer('users_id_user')->nullable()->index('users_id_user');
             $table->integer('rooms_id_room')->nullable()->index('rooms_id_room');
