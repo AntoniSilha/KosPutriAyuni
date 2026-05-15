@@ -65,36 +65,32 @@ npm install
 ```
 
 ### 3. Konfigurasi Environment (`.env`)
-Salin file `.env.example` menjadi `.env`:
-```bash
-cp .env.example .env
-```
-Generate kunci aplikasi Laravel:
+Buat file `.env` secara manual di root proyek, lalu isi dengan konfigurasi berikut:
 ```bash
 php artisan key:generate
 ```
 
-Buka file `.env` dan atur konfigurasi database serta API Keys Anda. **PENTING: Jangan gunakan kunci asli (Production) di server lokal!**
+Buka file `.env` dan atur konfigurasi sesuai kebutuhan Anda. **⚠️ PENTING: Jangan commit file `.env` ke repositori!**
 
 ```env
 # --- KONFIGURASI DATABASE ---
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=kosputriayuni_v2
-DB_USERNAME=root
-DB_PASSWORD=
+DB_CONNECTION=nama_koneksi_anda
+DB_HOST=host_database_anda
+DB_PORT=port_database_anda
+DB_DATABASE=nama_database_anda
+DB_USERNAME=username_database_anda
+DB_PASSWORD=password_database_anda
 
 # --- KONFIGURASI MIDTRANS ---
-MIDTRANS_SERVER_KEY=SB-Mid-server-*******
-MIDTRANS_CLIENT_KEY=SB-Mid-client-*******
+MIDTRANS_SERVER_KEY=your_midtrans_server_key
+MIDTRANS_CLIENT_KEY=your_midtrans_client_key
 MIDTRANS_IS_PRODUCTION=false
 
 # --- KONFIGURASI WHATSAPP GATEWAY (FONNTE) ---
 WHATSAPP_ENABLED=true
-FONNTE_API_URL=https://api.fonnte.com/send
-FONNTE_API_TOKEN=********
-WHATSAPP_ADMIN_PHONE=628********
+FONNTE_API_URL=your_fonnte_api_url
+FONNTE_API_TOKEN=your_fonnte_api_token
+WHATSAPP_ADMIN_PHONE=your_admin_phone_number
 ```
 
 ### 4. Migrasi Database & Seeding
