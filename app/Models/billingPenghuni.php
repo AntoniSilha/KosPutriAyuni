@@ -5,21 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class billingPenghuni extends Model
+class BillingPenghuni extends Model
 {
     protected $table = 'billingPenghuni';
     protected $primaryKey = 'id_billing';
-    
+
+    public $timestamps = false;
+
     protected $fillable = [
         'jatuh_tempo',
-        'payments_id_payment'
+        'payments_id_payment',
     ];
-        
-    const CREATED_AT = null;
-    const UPDATED_AT = null;
 
-    public function payment() : BelongsTo
+    protected function casts(): array
     {
-        return $this->belongsTo(payment::class, 'payments_id_payment');
+        return [
+            'jatuh_tempo' => 'date',
+        ];
+    }
+
+    public function payment(): BelongsTo
+    {
+        return $this->belongsTo(Payment::class, 'payments_id_payment');
     }
 }

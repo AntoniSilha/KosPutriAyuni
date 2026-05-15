@@ -1,0 +1,912 @@
+@import '../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../app/Filament/**/*.php';
+@source '../../views/filament/**/*.blade.php';
+
+:root {
+    --kos-cream: #fff8df;
+    --kos-sidebar: #fbf3d6;
+    --kos-panel: #fffefd;
+    --kos-soft: #f4eed9;
+    --kos-line: #ebe2c6;
+    --kos-brown: #766035;
+    --kos-brown-dark: #5b4827;
+    --kos-green: #58735d;
+    --kos-ink: #252316;
+    --kos-muted: #756c55;
+    --kos-red: #a51f25;
+}
+
+.fi-body,
+.fi-layout {
+    background: var(--kos-cream);
+    color: var(--kos-ink);
+}
+
+.fi-main {
+    padding-inline: 2rem;
+    padding-block: 0 2rem;
+}
+
+.fi-main,
+.fi-page,
+.fi-page-main,
+.fi-page-content {
+    background: transparent;
+}
+
+.fi-topbar {
+    min-height: 5.25rem;
+    background: rgba(255, 254, 250, 0.92);
+    border-bottom: 0;
+    box-shadow: none;
+    backdrop-filter: blur(14px);
+}
+
+.fi-sidebar {
+    background: var(--kos-sidebar);
+    border-right: 1px solid var(--kos-line);
+    box-shadow: none;
+}
+
+.fi-sidebar-header {
+    min-height: 6.25rem;
+    padding-inline: 1.5rem;
+    background: transparent;
+    box-shadow: none;
+}
+
+.fi-logo {
+    display: grid;
+    gap: 0.15rem;
+    color: var(--kos-brown-dark);
+    font-size: 1.1rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.fi-logo::after {
+    content: 'MANAGEMENT CONSOLE';
+    color: rgba(91, 72, 39, 0.48);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+}
+
+.fi-sidebar-nav {
+    padding: 1rem;
+}
+
+.fi-sidebar-nav-groups {
+    gap: 0.45rem;
+}
+
+.fi-sidebar-item-btn {
+    min-height: 2.75rem;
+    border-radius: 0;
+    color: #6c654f;
+    font-weight: 600;
+}
+
+.fi-sidebar-item-icon {
+    color: #776a4b;
+}
+
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn,
+.fi-sidebar-item-btn:hover {
+    background: rgba(118, 96, 53, 0.11);
+    color: var(--kos-brown-dark);
+}
+
+.fi-topbar .fi-global-search-field input {
+    border: 0;
+    background: var(--kos-soft);
+    color: var(--kos-ink);
+    box-shadow: none;
+}
+
+.fi-topbar .fi-global-search-field input:focus {
+    box-shadow: 0 0 0 3px rgba(88, 115, 93, 0.16);
+}
+
+.fi-header-heading {
+    color: var(--kos-brown-dark);
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: 0;
+}
+
+.fi-page-header-main-ctn {
+    gap: 1.75rem;
+}
+
+.kos-dashboard {
+    width: 100%;
+    color: var(--kos-ink);
+}
+
+.kos-dashboard h2,
+.kos-dashboard h3,
+.kos-dashboard strong {
+    color: var(--kos-brown-dark);
+}
+
+.kos-dashboard-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(20rem, 1fr);
+    gap: 2rem;
+}
+
+.kos-occupancy-card,
+.kos-room-summary,
+.kos-metric-card,
+.kos-chart-card,
+.kos-activity-card,
+.kos-billing-hero,
+.kos-announcement-card,
+.kos-room-info-card {
+    border: 1px solid rgba(118, 96, 53, 0.10);
+    border-radius: 0.5rem;
+    box-shadow: 0 20px 48px rgba(91, 72, 39, 0.08);
+}
+
+.kos-occupancy-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 10rem;
+    min-height: 18rem;
+    overflow: hidden;
+    background: var(--kos-panel);
+}
+
+.kos-occupancy-card > div:first-child {
+    padding: 2.5rem;
+}
+
+.kos-building-mark {
+    display: grid;
+    place-items: center;
+    background: #f7f2e8;
+    color: rgba(118, 96, 53, 0.16);
+}
+
+.kos-building-mark svg {
+    width: 4.5rem;
+    height: 4.5rem;
+}
+
+.kos-eyebrow {
+    margin: 0;
+    color: var(--kos-muted);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.kos-display {
+    margin: 0.55rem 0 0;
+    color: var(--kos-brown);
+    font-size: 3.4rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.kos-copy {
+    max-width: 30rem;
+    margin-top: 1.2rem;
+    color: #5c5545;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.kos-room-summary {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.25rem;
+    padding: 2.5rem;
+    background: var(--kos-brown);
+}
+
+.kos-room-summary .kos-eyebrow,
+.kos-room-summary span,
+.kos-room-summary strong {
+    color: white;
+}
+
+.kos-room-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    padding-bottom: 0.85rem;
+    font-size: 1.05rem;
+}
+
+.kos-room-row strong {
+    font-size: 1.9rem;
+}
+
+.kos-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+}
+
+.kos-chip-row span {
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.13);
+    padding: 0.35rem 0.8rem;
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.kos-section-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+.kos-section-head h2 {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 900;
+}
+
+.kos-section-head p {
+    margin: 0.2rem 0 0;
+    color: var(--kos-muted);
+}
+
+.kos-section-head a {
+    color: var(--kos-brown-dark);
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.kos-section-head a::after {
+    content: ' ->';
+}
+
+.kos-finance-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.kos-metric-card {
+    min-height: 9.5rem;
+    padding: 2rem;
+    background: rgba(244, 238, 217, 0.7);
+}
+
+.kos-metric-card strong {
+    display: block;
+    margin-top: 1rem;
+    font-size: 1.65rem;
+    font-weight: 900;
+}
+
+.kos-metric-card span {
+    display: block;
+    margin-top: 0.55rem;
+    color: #5d5644;
+    font-size: 0.82rem;
+}
+
+.kos-positive {
+    color: #087443 !important;
+}
+
+.kos-danger {
+    color: var(--kos-red) !important;
+}
+
+.kos-main-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(18rem, 0.95fr);
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.kos-chart-card {
+    min-height: 28rem;
+    padding: 2rem;
+    background: white;
+}
+
+.kos-card-head {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.kos-card-head h3,
+.kos-activity-card h3,
+.kos-card-title-row h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 900;
+}
+
+.kos-card-head p {
+    margin: 0.35rem 0 0;
+    color: var(--kos-muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.kos-legend {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--kos-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.kos-legend i {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 999px;
+    background: var(--kos-brown);
+}
+
+.kos-bar-chart {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(2.5rem, 1fr));
+    align-items: end;
+    gap: 1.2rem;
+    height: 18rem;
+    margin-top: 3rem;
+}
+
+.kos-bar-item {
+    display: grid;
+    grid-template-rows: 1.25rem 1fr 1.25rem;
+    justify-items: center;
+    height: 100%;
+}
+
+.kos-bar-item strong {
+    font-size: 1rem;
+}
+
+.kos-bar-item span {
+    align-self: end;
+    width: 1.25rem;
+    min-height: 0.6rem;
+    background: var(--kos-brown);
+}
+
+.kos-bar-item small {
+    color: #4f4a3b;
+    font-size: 0.68rem;
+    font-weight: 800;
+}
+
+.kos-activity-card,
+.kos-announcement-card {
+    padding: 2rem;
+    background: rgba(244, 238, 217, 0.86);
+}
+
+.kos-activity-list {
+    display: grid;
+    gap: 1.6rem;
+    margin-top: 1.6rem;
+}
+
+.kos-activity-item {
+    display: grid;
+    grid-template-columns: 0.65rem minmax(0, 1fr);
+    gap: 1rem;
+}
+
+.kos-activity-item > span {
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-top: 0.35rem;
+    border-radius: 999px;
+    background: rgba(118, 96, 53, 0.22);
+}
+
+.kos-activity-item.is-strong > span {
+    background: var(--kos-brown);
+}
+
+.kos-activity-item strong {
+    display: block;
+    font-size: 0.9rem;
+}
+
+.kos-activity-item p,
+.kos-activity-item small,
+.kos-empty {
+    margin: 0.2rem 0 0;
+    color: #706853;
+    font-size: 0.78rem;
+}
+
+.kos-activity-item small {
+    display: block;
+    color: #9a9074;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.kos-billing-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 1fr);
+    min-height: 25rem;
+    overflow: hidden;
+    background: white;
+}
+
+.kos-billing-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 2.2rem;
+}
+
+.kos-billing-copy h2 {
+    margin: 0;
+    font-size: 1.55rem;
+    font-weight: 900;
+}
+
+.kos-billing-copy p {
+    margin: 0.4rem 0 0;
+    color: var(--kos-brown-dark);
+    font-size: 0.9rem;
+}
+
+.kos-billing-copy strong {
+    margin-top: 2.2rem;
+    font-size: 2.35rem;
+    font-weight: 900;
+}
+
+.kos-due-alert,
+.kos-paid-alert,
+.kos-muted-alert {
+    margin-top: 0.25rem;
+    font-size: 0.78rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.kos-due-alert {
+    color: #bf1118;
+}
+
+.kos-paid-alert {
+    color: #0b7a48;
+}
+
+.kos-muted-alert {
+    color: var(--kos-muted);
+}
+
+.kos-primary-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9rem;
+    min-height: 3.5rem;
+    margin-top: auto;
+    border-radius: 0.25rem;
+    background: var(--kos-brown);
+    padding: 0 2rem;
+    color: white;
+    font-weight: 800;
+    text-decoration: none;
+    transition: background 180ms ease, transform 180ms ease;
+}
+
+.kos-primary-action:hover {
+    background: var(--kos-brown-dark);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.kos-primary-action svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.kos-room-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.kos-resident-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(18rem, 0.95fr);
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.kos-card-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.kos-card-title-row svg {
+    width: 1.35rem;
+    height: 1.35rem;
+    color: var(--kos-brown);
+}
+
+.kos-announcement-card {
+    min-height: 19rem;
+}
+
+.kos-announcement-list {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 1.8rem;
+}
+
+.kos-announcement-item {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: 1rem;
+}
+
+.kos-announcement-item time {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.25rem;
+    background: white;
+    color: var(--kos-brown-dark);
+    font-size: 0.77rem;
+    font-weight: 800;
+    line-height: 1.1;
+    text-align: center;
+}
+
+.kos-announcement-item strong {
+    font-size: 0.95rem;
+}
+
+.kos-announcement-item p {
+    margin: 0.3rem 0 0;
+    color: #6e6652;
+    font-size: 0.85rem;
+}
+
+.kos-room-info-card {
+    display: grid;
+    gap: 1.65rem;
+    padding: 2rem;
+    background: white;
+}
+
+.kos-room-info-card div {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.kos-room-info-card span {
+    color: var(--kos-brown-dark);
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.kos-room-info-card strong {
+    font-size: 1.55rem;
+}
+
+.kos-room-info-card p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    color: var(--kos-brown-dark);
+    font-weight: 800;
+}
+
+.kos-room-info-card i {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: #0aa25b;
+}
+
+.kos-payments-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.kos-payment-row,
+.kos-empty-state {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) auto auto auto;
+    align-items: center;
+    gap: 1.25rem;
+    border: 1px solid rgba(118, 96, 53, 0.10);
+    border-radius: 0.5rem;
+    background: white;
+    padding: 1.25rem;
+    box-shadow: 0 16px 36px rgba(91, 72, 39, 0.07);
+}
+
+.kos-payment-row h3,
+.kos-empty-state h3 {
+    margin: 0.25rem 0;
+    color: var(--kos-brown-dark);
+    font-size: 1.1rem;
+    font-weight: 900;
+}
+
+.kos-payment-row span {
+    color: var(--kos-muted);
+    font-size: 0.82rem;
+}
+
+.kos-payment-row > strong {
+    color: var(--kos-brown-dark);
+    font-size: 1.15rem;
+}
+
+.kos-payment-status {
+    border-radius: 999px;
+    background: rgba(191, 17, 24, 0.10);
+    padding: 0.45rem 0.8rem;
+    color: #9d161c !important;
+    font-weight: 800;
+}
+
+.kos-payment-status.is-paid {
+    background: rgba(10, 162, 91, 0.12);
+    color: #087443 !important;
+}
+
+.kos-payment-row a,
+.kos-empty-state a {
+    border-radius: 0.25rem;
+    background: var(--kos-brown);
+    padding: 0.65rem 1rem;
+    color: white;
+    font-weight: 800;
+    text-align: center;
+    text-decoration: none;
+}
+
+.kos-empty-state {
+    grid-template-columns: 1fr;
+    justify-items: start;
+    padding: 2rem;
+}
+
+.kos-empty-state p {
+    margin: 0;
+    color: var(--kos-muted);
+}
+
+@media (max-width: 1100px) {
+    .kos-dashboard-hero,
+    .kos-main-grid,
+    .kos-billing-hero,
+    .kos-resident-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .kos-room-photo {
+        min-height: 18rem;
+    }
+}
+
+@media (max-width: 760px) {
+    .fi-main {
+        padding-inline: 0.75rem;
+    }
+
+    .kos-finance-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .kos-occupancy-card {
+        grid-template-columns: 1fr;
+    }
+
+    .kos-building-mark {
+        min-height: 8rem;
+    }
+
+    .kos-section-head {
+        align-items: start;
+        flex-direction: column;
+    }
+
+    .kos-bar-chart {
+        gap: 0.6rem;
+        overflow-x: auto;
+    }
+
+    .kos-payment-row {
+        grid-template-columns: 1fr;
+        justify-items: start;
+    }
+
+    /* Resident Dashboard: billing hero - image first on mobile */
+    .kos-billing-hero {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .kos-billing-copy {
+        padding: 1.5rem;
+        align-items: center;
+        text-align: center;
+    }
+
+    .kos-billing-copy h2 {
+        font-size: 1.25rem;
+    }
+
+    .kos-billing-copy strong {
+        margin-top: 1.2rem;
+        font-size: 1.85rem;
+    }
+
+    .kos-room-photo {
+        min-height: 14rem;
+        max-height: 18rem;
+    }
+
+    .kos-primary-action {
+        width: 100%;
+        justify-content: center;
+        min-height: 3rem;
+        padding: 0 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    /* Resident grid: stack on mobile */
+    .kos-resident-grid {
+        gap: 1.25rem;
+    }
+
+    .kos-announcement-card,
+    .kos-room-info-card {
+        padding: 1.25rem;
+    }
+
+    .kos-room-info-card strong {
+        font-size: 1.25rem;
+    }
+
+    .kos-display {
+        font-size: 2.5rem;
+    }
+
+    .kos-occupancy-card > div:first-child {
+        padding: 1.5rem;
+    }
+
+    .kos-room-summary {
+        padding: 1.5rem;
+    }
+
+    .kos-metric-card {
+        min-height: auto;
+        padding: 1.25rem;
+    }
+}
+
+/* ========================================
+   DARK MODE SUPPORT
+   ======================================== */
+.dark {
+    --kos-cream: #1a1a1a;
+    --kos-sidebar: #1e1e1e;
+    --kos-panel: #242424;
+    --kos-soft: #2a2a2a;
+    --kos-line: #3a3a3a;
+    --kos-brown: #a07840;
+    --kos-brown-dark: #c49a5c;
+    --kos-green: #6d9474;
+    --kos-ink: #e8e4dc;
+    --kos-muted: #a09880;
+    --kos-red: #d43e42;
+}
+
+.dark .fi-body,
+.dark .fi-layout {
+    background: var(--kos-cream);
+    color: var(--kos-ink);
+}
+
+.dark .fi-topbar {
+    background: rgba(30, 30, 30, 0.92);
+    border-bottom-color: var(--kos-line);
+}
+
+.dark .fi-sidebar {
+    background: var(--kos-sidebar);
+    border-right-color: var(--kos-line);
+}
+
+.dark .fi-sidebar-item-btn {
+    color: #a09880;
+}
+
+.dark .fi-sidebar-item.fi-active > .fi-sidebar-item-btn,
+.dark .fi-sidebar-item-btn:hover {
+    background: rgba(160, 120, 64, 0.15);
+    color: var(--kos-brown-dark);
+}
+
+.dark .kos-occupancy-card,
+.dark .kos-chart-card,
+.dark .kos-room-info-card {
+    background: var(--kos-panel);
+    border-color: var(--kos-line);
+}
+
+.dark .kos-metric-card {
+    background: rgba(42, 42, 42, 0.9);
+    border-color: var(--kos-line);
+}
+
+.dark .kos-metric-card span {
+    color: #a09880;
+}
+
+.dark .kos-activity-card,
+.dark .kos-announcement-card {
+    background: rgba(42, 42, 42, 0.86);
+    border-color: var(--kos-line);
+}
+
+.dark .kos-billing-hero {
+    background: var(--kos-panel);
+    border-color: var(--kos-line);
+}
+
+.dark .kos-copy {
+    color: #b0a890;
+}
+
+.dark .kos-building-mark {
+    background: #2a2a28;
+    color: rgba(160, 120, 64, 0.2);
+}
+
+.dark .kos-activity-item p,
+.dark .kos-activity-item small,
+.dark .kos-announcement-item p {
+    color: #a09880;
+}
+
+.dark .kos-announcement-item time {
+    background: var(--kos-soft);
+    color: var(--kos-brown-dark);
+}
+
+.dark .kos-section-head p {
+    color: var(--kos-muted);
+}
+
+.dark .kos-payment-row,
+.dark .kos-empty-state {
+    background: var(--kos-panel);
+    border-color: var(--kos-line);
+}
+

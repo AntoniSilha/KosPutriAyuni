@@ -1,59 +1,140 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
+  <h1>🏡 Sistem Manajemen Kos Putri Ayuni</h1>
+  <p><i>Sistem manajemen pemesanan, pembayaran, dan administrasi kos berbasis web modern.</i></p>
+  
+  ![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+  ![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
+  ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+  ![Midtrans](https://img.shields.io/badge/Midtrans-Payment-blue?style=for-the-badge)
+  ![Filament](https://img.shields.io/badge/Filament-Admin-yellow?style=for-the-badge)
+</div>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<br/>
 
-## About Laravel
+## 📖 Ringkasan Proyek (Project Summary)
+**Kos Putri Ayuni** adalah aplikasi manajemen properti (kos) terintegrasi yang dirancang untuk mempermudah alur pemesanan kamar oleh calon penghuni dan alur administrasi oleh pemilik kos. 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Aplikasi ini mengatasi masalah *double-booking* dengan sistem **"Satu User, Satu Pesanan Aktif"**, memvalidasi identitas pengguna melalui No. KTP, serta menyediakan pengalaman pembayaran secara *seamless* menggunakan **Midtrans Payment Gateway** (mendukung QRIS, Virtual Account, dll). Di sisi pengelola, tersedia **Dashboard Admin (Filament)** yang modern untuk memantau data penghuni, kamar, dan status pembayaran secara *real-time*.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## ✨ Fitur Utama
+Aplikasi ini memiliki beberapa fitur unggulan yang dirancang siap pakai:
 
-## Learning Laravel
+- 🔒 **Sistem Autentikasi Kuat**: Registrasi user dengan validasi KTP & pembatasan peran (*User, Penghuni, Admin*).
+- 🛍️ **Smart Booking System**: Mencegah user memesan lebih dari satu kamar secara bersamaan. Dilengkapi dengan detail durasi sewa dan rincian harga.
+- 💳 **Pembayaran Otomatis (Midtrans)**: Integrasi Snap API Midtrans untuk berbagai metode pembayaran. Memiliki sistem *Auto-Retry* cerdas jika *user* membatalkan/menutup *popup* pembayaran (QRIS).
+- 📱 **Notifikasi WhatsApp (Fonnte)**: Pengiriman notifikasi tagihan dan resi pembayaran secara otomatis ke WhatsApp Admin.
+- 📊 **Dashboard Filament Admin**: Panel admin super interaktif untuk mengelola Kamar, User, Pemesanan, dan Pembayaran.
+- 🖼️ **UI/UX Modern & Responsif**: Tampilan antarmuka yang optimal di *mobile* maupun *desktop* (dibangun dengan Tailwind CSS).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ Teknologi yang Digunakan (Tech Stack)
+- **Framework**: [Laravel 12](https://laravel.com/)
+- **Frontend**: Blade Templating, [Tailwind CSS](https://tailwindcss.com/)
+- **Admin Panel**: [Filament v3](https://filamentphp.com/)
+- **Database**: MySQL / SQLite (Bisa disesuaikan di `.env`)
+- **Payment Gateway**: [Midtrans](https://midtrans.com/)
+- **WhatsApp Gateway**: [Fonnte API](https://fonnte.com/)
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🚀 Panduan Instalasi (Untuk Developer Baru)
 
-### Premium Partners
+Jika Anda ingin melanjutkan pengembangan proyek ini, ikuti langkah-langkah instalasi berikut:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 1. Kebutuhan Sistem (Prerequisites)
+Pastikan Anda sudah menginstal:
+- PHP >= 8.2
+- Composer
+- Node.js & NPM
+- Database Server (MySQL/MariaDB)
 
-## Contributing
+### 2. Kloning & Persiapan Proyek
+```bash
+# Clone repositori ini (ganti URL jika menggunakan git)
+git clone <url-repo-anda> kos-putri-ayuni
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Masuk ke direktori proyek
+cd kos-putri-ayuni
 
-## Code of Conduct
+# Install dependensi PHP & Node.js
+composer install
+npm install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 3. Konfigurasi Environment (`.env`)
+Salin file `.env.example` menjadi `.env`:
+```bash
+cp .env.example .env
+```
+Generate kunci aplikasi Laravel:
+```bash
+php artisan key:generate
+```
 
-## Security Vulnerabilities
+Buka file `.env` dan atur konfigurasi database serta API Keys Anda. **PENTING: Jangan gunakan kunci asli (Production) di server lokal!**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```env
+# --- KONFIGURASI DATABASE ---
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=kosputriayuni_v2
+DB_USERNAME=root
+DB_PASSWORD=
 
-## License
+# --- KONFIGURASI MIDTRANS ---
+MIDTRANS_SERVER_KEY=SB-Mid-server-*******
+MIDTRANS_CLIENT_KEY=SB-Mid-client-*******
+MIDTRANS_IS_PRODUCTION=false
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# --- KONFIGURASI WHATSAPP GATEWAY (FONNTE) ---
+WHATSAPP_ENABLED=true
+FONNTE_API_URL=https://api.fonnte.com/send
+FONNTE_API_TOKEN=********
+WHATSAPP_ADMIN_PHONE=628********
+```
+
+### 4. Migrasi Database & Seeding
+Jalankan migrasi untuk membangun struktur tabel:
+```bash
+php artisan migrate:fresh --seed
+```
+*(Proses seeding akan membuatkan akun admin default dan beberapa contoh kamar).*
+
+### 5. Menjalankan Server
+Jalankan dua perintah ini di dua terminal terpisah:
+```bash
+# Terminal 1: Menjalankan server Laravel
+php artisan serve
+
+# Terminal 2: Menjalankan Vite (Asset bundler Tailwind CSS)
+npm run dev
+```
+Aplikasi kini dapat diakses di: `http://localhost:8000`
+
+---
+
+## 📂 Struktur Modul Penting
+Untuk membantu navigasi bagi developer selanjutnya, berikut adalah lokasi file krusial yang mengatur alur bisnis aplikasi:
+
+| Modul / Fungsionalitas | Lokasi File | Deskripsi |
+| :--- | :--- | :--- |
+| **Sistem Pembayaran** | `app/Services/PaymentService.php` | Menangani *generate* token Midtrans dan pengecekan status manual. |
+| **Pemesanan Kamar** | `app/Http/Controllers/PesananController.php` | Mengatur logika *booking*, pengecekan duplikasi pemesanan, & auto-retry *Snap Token*. |
+| **Notifikasi WA** | `app/Services/WhatsAppService.php` | Sistem pengiriman pesan API ke Fonnte (hanya untuk Admin). |
+| **Event Listener** | `app/Listeners/SendPaymentNotification.php` | *Trigger* otomatis setelah pembayaran di Midtrans sukses (`approve`). |
+| **Admin Dashboard** | `app/Filament/Resources/*` | Tempat Anda menambahkan/mengedit panel CRUD Filament. |
+
+---
+
+## 💡 Catatan Tambahan (Pengembangan Kedepan)
+- **Midtrans Webhook**: Saat proyek ini di-*deploy* ke *production* (hosting/VPS), pastikan untuk memasukkan URL Webhook (`https://domain-anda.com/payment/notification`) ke dalam *dashboard* Midtrans agar pembaruan status pembayaran berjalan sepenuhnya otomatis.
+- **Auto-Cancel Booking**: Booking akan otomatis dibatalkan jika melebihi batas waktu 24 jam. Ini sudah diatur dalam model Booking (fungsi `isExpired()`).
+
+---
+<div align="center">
+  <p>Dibuat dengan ❤️ untuk kemudahan manajemen Kos Putri Ayuni.</p>
+</div>

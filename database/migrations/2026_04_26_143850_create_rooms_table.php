@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('rooms', function (Blueprint $table) {
-            $table->integer('id_room')->primary()->autoIncrement();;
+            $table->integer('id_room')->primary()->autoIncrement();
             $table->string('no_kamar', 3)->nullable();
             $table->text('deskripsi')->nullable();
             $table->decimal('harga_perbulan', 10)->nullable();
-            $table->enum('status', ['tersedia', 'tidak tersedia'])->nullable();
+            $table->enum('status', ['tersedia', 'tidak tersedia', 'perbaikan'])->nullable();
         });
     }
 
