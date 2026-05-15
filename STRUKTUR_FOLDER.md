@@ -51,13 +51,3 @@ Menyimpan semua file visual yang dilihat oleh User dan Penghuni.
 
 ### 6. `public/` (Aset Terbuka)
 - Folder yang bisa diakses langsung lewat browser. Menyimpan file CSS, JavaScript *compiled* (hasil build Tailwind), dan gambar aset statis.
-
----
-
-## 🧹 Log Pembersihan (Cleanup Log)
-Untuk meringankan kinerja *server* dan *repository*, saya telah menghapus beberapa file sampah (Junk Files) yang tidak lagi relevan:
-1. `check*.php` - File-file script PHP mandiri yang sebelumnya digunakan untuk *debugging* (*check.php, check2.php, check_compiled.php*, dll).
-2. `resources/views/welcome.blade.php` - Halaman *landing page* bawaan (default) dari instalasi awal Laravel yang sudah tidak dipakai (sudah digantikan oleh `home.blade.php`).
-3. `storage/logs/*.log` - Riwayat *log error* lama yang sudah menumpuk agar ruang *storage* aplikasi kembali kosong dan segar.
-
-*Semua pembersihan telah dipastikan tidak mengganggu logika *routing* maupun tampilan sistem Kos Putri Ayuni!* 🚀
