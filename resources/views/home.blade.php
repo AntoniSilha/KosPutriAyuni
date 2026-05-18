@@ -5,8 +5,7 @@
 <!-- Hero Section -->
 <section class="relative h-screen flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0 z-0 bg-gray-900">
-        <!-- Placeholder for hero image, adjust path if you have a real image -->
-        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Kos Kosan" class="w-full h-full object-cover opacity-50 hero-img" />
+        <img src="{{ asset('assets/img/HeroImage.png') }}" alt="Kos Kosan" class="w-full h-full object-cover opacity-50 hero-img" />
     </div>
     
     <div class="relative z-10 text-center px-4 max-w-4xl mx-auto gs-hero-content">
