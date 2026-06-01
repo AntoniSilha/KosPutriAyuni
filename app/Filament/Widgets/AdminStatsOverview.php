@@ -12,6 +12,8 @@ use Illuminate\Support\Carbon;
 
 class AdminStatsOverview extends StatsOverviewWidget
 {
+    protected static bool $isLazy = true;
+
     protected function getStats(): array
     {
         $totalRooms = Room::count();

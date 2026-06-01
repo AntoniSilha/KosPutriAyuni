@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Room;
 use App\Models\Booking;
 
+use App\Services\BookingService;
+
 class HomeController extends Controller
 {
     /**
      * Show landing page
      */
-    public function index()
+    public function index(BookingService $bookingService)
     {
+        // Clean up expired bookings
+        $bookingService->expireOldBookings();
+
         // Get all rooms (including maintenance and unavailable) to show user info
         $rooms = Room::with('images')->get();
 
@@ -53,5 +58,21 @@ class HomeController extends Controller
     public function about()
     {
         return view('about');
+    }
+
+    /**
+     * Show room detail page
+     */
+    public function showRoom(int $id)
+    {
+        $room = Room::with('images')->findOrFail($id);
+
+        // Get other rooms for "Kamar Lainnya" section (exclude current room)
+        $otherRooms = Room::with('images')
+            ->where('id_room', '!=', $id)
+            ->limit(4)
+            ->get();
+
+        return view('room.show', compact('room', 'otherRooms'));
     }
 }

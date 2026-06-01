@@ -18,9 +18,16 @@ class Booking extends Model
             if ($booking->payment) {
                 $booking->payment->delete();
             }
-            // Kembalikan status kamar menjadi tersedia jika pesanan dihapus
+            // Kembalikan status kamar menjadi tersedia jika pesanan dihapus dan tidak ada pesanan aktif lainnya
             if ($booking->room && $booking->room->status === 'tidak tersedia') {
-                $booking->room->update(['status' => 'tersedia']);
+                $hasOtherActiveBookings = static::where('rooms_id_room', $booking->rooms_id_room)
+                    ->whereIn('status', ['pending', 'confirmed'])
+                    ->where('id_booking', '!=', $booking->id_booking)
+                    ->exists();
+
+                if (!$hasOtherActiveBookings) {
+                    $booking->room->update(['status' => 'tersedia']);
+                }
             }
         });
     }

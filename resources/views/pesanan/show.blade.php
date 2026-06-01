@@ -43,9 +43,9 @@
                     <div class="flex gap-4 items-start">
                         <div class="w-24 h-24 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
                             @if($booking->room->images->isNotEmpty())
-                                <img src="{{ $booking->room->images->first()->img_url }}" alt="Kamar" class="w-full h-full object-cover">
+                                <img src="{{ $booking->room->images->first()->img_url }}" alt="Kamar" class="w-full h-full object-cover" loading="lazy">
                             @else
-                                <div class="w-full h-full flex items-center justify-center text-gray-400">No Image</div>
+                                <img src="{{ asset('assets/img/room/room_fallback.jpg') }}" alt="Kamar" class="w-full h-full object-cover" loading="lazy">
                             @endif
                         </div>
                         <div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth overflow-x-hidden">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,14 +17,14 @@
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:title" content="@yield('title', 'Kos Putri Ayuni - Hunian Nyaman Khusus Putri')">
     <meta property="og:description" content="@yield('meta_description', 'Kos Putri Ayuni - Hunian nyaman, aman, dan bersih khusus perempuan. Fasilitas lengkap, WiFi gratis, lokasi strategis.')">
-    <meta property="og:image" content="{{ asset('assets/img/TampilanKos.jpeg') }}">
+    <meta property="og:image" content="{{ asset('assets/img/layout/og_image.jpeg') }}">
     <meta property="og:locale" content="id_ID">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="@yield('title', 'Kos Putri Ayuni - Hunian Nyaman Khusus Putri')">
     <meta name="twitter:description" content="@yield('meta_description', 'Kos Putri Ayuni - Hunian nyaman, aman, dan bersih khusus perempuan.')">
-    <meta name="twitter:image" content="{{ asset('assets/img/TampilanKos.jpeg') }}">
+    <meta name="twitter:image" content="{{ asset('assets/img/layout/og_image.jpeg') }}">
 
     <!-- Structured Data (JSON-LD) for Google -->
     <script type="application/ld+json">
@@ -34,7 +34,7 @@
         "name": "Kos Putri Ayuni",
         "description": "Hunian nyaman, aman, dan bersih khusus perempuan dengan fasilitas lengkap dan lokasi strategis dekat kampus.",
         "url": "{{ url('/') }}",
-        "image": "{{ asset('assets/img/TampilanKos.jpeg') }}",
+        "image": "{{ asset('assets/img/layout/og_image.jpeg') }}",
         "priceRange": "$$",
         "amenityFeature": [
             {"@@type": "LocationFeatureSpecification", "name": "WiFi Gratis"},
@@ -134,14 +134,14 @@
         }
     </style>
 </head>
-<body class="cream-bg text-gray-800 antialiased overflow-x-hidden">
+<body class="cream-bg text-gray-800 antialiased">
 
     <!-- Progress Bar -->
     <div id="page-progress"></div>
 
     <!-- Navigation -->
     @if(!Route::is('login') && !Route::is('register') && !Route::is('password.request') && !Route::is('password.reset'))
-    <nav id="mainNav" class="fixed w-full z-50 transition-all duration-300 {{ Route::is('home') ? 'bg-transparent text-white' : 'glass-nav text-gray-800' }}">
+    <nav id="mainNav" class="fixed w-full z-50 transition-all duration-300 {{ Route::is('home') ? 'bg-transparent text-white' : 'bg-white shadow-sm text-gray-800' }}">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <div class="flex-shrink-0 flex items-center gap-2">
@@ -153,7 +153,7 @@
                     <a href="{{ route('home') }}" class="font-medium hover:text-[#8C6A4F] transition-colors">Home</a>
                     <a href="{{ route('home') }}#tipe-kamar" class="font-medium hover:text-[#8C6A4F] transition-colors">Tipe Kamar</a>
 
-                    <a href="{{ route('home') }}#about" class="font-medium hover:text-[#8C6A4F] transition-colors">About Us</a>
+                    <a href="{{ route('about') }}" class="font-medium hover:text-[#8C6A4F] transition-colors">About Us</a>
                     @if(auth()->check() && !auth()->user()->isAdmin())
                         <a href="{{ auth()->user()->booking ? route('pesanan.show', auth()->user()->booking->id_booking) : route('pesanan.index') }}" class="font-medium hover:text-[#8C6A4F] transition-colors">Pesanan</a>
                     @endif
@@ -195,6 +195,7 @@
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="{{ route('home') }}" class="block px-3 py-2 rounded-md font-medium">Home</a>
                 <a href="{{ route('home') }}#tipe-kamar" class="block px-3 py-2 rounded-md font-medium">Tipe Kamar</a>
+                <a href="{{ route('about') }}" class="block px-3 py-2 rounded-md font-medium">About Us</a>
                 @if(auth()->check())
                     @if(!auth()->user()->isAdmin())
                         <a href="{{ auth()->user()->booking ? route('pesanan.show', auth()->user()->booking->id_booking) : route('pesanan.index') }}" class="block px-3 py-2 rounded-md font-medium">Pesanan</a>
@@ -302,25 +303,30 @@
         }
 
         // Navbar Scroll Effect
-        window.addEventListener('scroll', function() {
+        function updateNavbar() {
             const nav = document.getElementById('mainNav');
             if (!nav) return;
 
-            const isHome = {{ Route::is('home') ? 'true' : 'false' }};
+            const isHome = location.pathname === '/' || location.pathname === '/home';
             
             if (window.scrollY > 50) {
-                nav.classList.add('glass-nav', 'text-gray-800');
-                if (isHome) nav.classList.remove('bg-transparent', 'text-white');
+                nav.classList.add('bg-white', 'text-gray-800', 'shadow-sm');
+                nav.classList.remove('bg-transparent', 'text-white');
             } else {
-                nav.classList.remove('glass-nav');
                 if (isHome) {
                     nav.classList.add('bg-transparent', 'text-white');
-                    nav.classList.remove('text-gray-800');
+                    nav.classList.remove('text-gray-800', 'bg-white', 'shadow-sm');
                 } else {
-                    nav.classList.add('text-gray-800');
+                    nav.classList.add('text-gray-800', 'bg-white');
+                    nav.classList.remove('bg-transparent', 'text-white', 'shadow-sm');
                 }
             }
-        });
+        }
+        
+        window.addEventListener('scroll', updateNavbar);
+        
+        // Also call it on SPA navigation
+        document.addEventListener('DOMContentLoaded', updateNavbar);
 
         // Auto-hide toasts after 5s
         setTimeout(() => {
@@ -399,6 +405,10 @@
                     if(s.src) ns.src = s.src; else ns.textContent = s.textContent;
                     s.replaceWith(ns);
                 });
+                
+                // Update navbar based on new URL
+                if (typeof updateNavbar === 'function') updateNavbar();
+                
                 hideBar();
                 navInProgress = false;
             })

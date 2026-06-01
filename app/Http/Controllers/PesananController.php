@@ -6,6 +6,8 @@ use App\Models\Booking;
 use App\Services\PaymentService;
 use Illuminate\Http\Request;
 
+use App\Services\BookingService;
+
 class PesananController extends Controller
 {
     public function __construct(
@@ -15,8 +17,10 @@ class PesananController extends Controller
     /**
      * List all bookings for authenticated user
      */
-    public function index(Request $request)
+    public function index(Request $request, BookingService $bookingService)
     {
+        $bookingService->expireOldBookings();
+
         $user = auth()->user();
 
         $query = $user->bookings()

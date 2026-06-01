@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class LatestBookings extends TableWidget
 {
+    protected static bool $isLazy = true;
     protected static ?string $heading = 'Pemesanan Terbaru';
     protected static ?int $sort = 3;
     protected int | string | array $columnSpan = 'full';

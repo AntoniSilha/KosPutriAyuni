@@ -1,11 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    /* Default (Mobile, 1 column): Show only first 2 items if not expanded */
+    .rooms-grid:not(.is-expanded) .room-card-item:nth-child(n+3) {
+        display: none !important;
+    }
+
+    /* Tablet (SM, 2 columns): Show only first 4 items if not expanded */
+    @media (min-width: 640px) {
+        .rooms-grid:not(.is-expanded) .room-card-item:nth-child(n+3) {
+            display: block !important;
+        }
+        .rooms-grid:not(.is-expanded) .room-card-item:nth-child(n+5) {
+            display: none !important;
+        }
+    }
+
+    /* Desktop (LG, 3 columns): Show only first 6 items if not expanded */
+    @media (min-width: 1024px) {
+        .rooms-grid:not(.is-expanded) .room-card-item:nth-child(n+5) {
+            display: block !important;
+        }
+        .rooms-grid:not(.is-expanded) .room-card-item:nth-child(n+7) {
+            display: none !important;
+        }
+    }
+</style>
 
 <!-- Hero Section -->
 <section class="relative h-screen flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0 z-0 bg-gray-900">
-        <img src="{{ asset('assets/img/HeroImage.png') }}" alt="Kos Kosan" class="w-full h-full object-cover opacity-50 hero-img" />
+        <img src="{{ asset('assets/img/home/hero.png') }}" alt="Kos Kosan" class="w-full h-full object-cover opacity-50 hero-img" loading="lazy" />
     </div>
     
     <div class="relative z-10 text-center px-4 max-w-4xl mx-auto gs-hero-content">
@@ -20,7 +46,7 @@
                 Book Now
                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </a>
-            <a href="#about" class="px-8 py-4 bg-white/20 backdrop-blur-md text-white border border-white/50 rounded-full font-semibold text-lg hover:bg-white/30 transition inline-flex items-center justify-center">
+            <a href="{{ route('about') }}" class="px-8 py-4 bg-white/20 backdrop-blur-md text-white border border-white/50 rounded-full font-semibold text-lg hover:bg-white/30 transition inline-flex items-center justify-center">
                 Learn More
             </a>
         </div>
@@ -80,7 +106,7 @@
             </div>
             <div class="relative gs-fade-left order-1 md:order-2">
                 <div class="absolute inset-0 bg-[#8C6A4F] rounded-2xl transform translate-x-3 translate-y-3 sm:translate-x-4 sm:translate-y-4"></div>
-                <img src="{{ asset('assets/img/TampilanKos.jpeg') }}" alt="Tampilan Kos" class="relative rounded-2xl shadow-xl w-full object-cover h-[280px] sm:h-[400px] md:h-[500px]" />
+                <img src="{{ asset('assets/img/home/tampilan_kos.jpeg') }}" alt="Tampilan Kos" class="relative rounded-2xl shadow-xl w-full object-cover h-[280px] sm:h-[400px] md:h-[500px]" loading="lazy" />
             </div>
         </div>
     </div>
@@ -135,7 +161,7 @@
             </div>
         </div>
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8 rooms-grid">
             @forelse($rooms as $room)
             @php
                 $statusBadge = match($room->status) {
@@ -146,16 +172,17 @@
                 };
                 $isBookable = $room->status === 'tersedia';
             @endphp
-            <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 group gs-stagger-room {{ !$isBookable ? 'opacity-85' : '' }}">
+            <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 group gs-stagger-room room-card-item {{ !$isBookable ? 'opacity-85' : '' }}">
                 <!-- Dynamic Image Gallery with GSAP -->
                 <div class="relative h-48 sm:h-64 overflow-hidden room-gallery-container cursor-pointer">
                     @forelse($room->images as $index => $img)
                         <img src="{{ $img->img_url }}" 
                              alt="Kamar {{ $room->no_kamar }}" 
                              class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 gallery-img {{ $index === 0 ? 'opacity-100 active' : 'opacity-0' }}"
-                             data-room="{{ $room->id_room }}">
+                             data-room="{{ $room->id_room }}"
+                             loading="lazy">
                     @empty
-                        <img src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Kamar {{ $room->no_kamar }}" class="w-full h-full object-cover">
+                        <img src="{{ asset('assets/img/room/room_fallback.jpg') }}" alt="Kamar {{ $room->no_kamar }}" class="w-full h-full object-cover" loading="lazy">
                     @endforelse
                     
                     <div class="absolute top-4 right-4 z-10 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold shadow border {{ $statusBadge['color'] }}">
@@ -191,19 +218,24 @@
                             <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
                             <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path></svg>
                         </div>
-                        @if ($isBookable)
-                            <a href="{{ route('booking.create', ['room_id' => $room->id_room]) }}" class="px-4 sm:px-5 py-2 bg-gray-900 text-white text-xs sm:text-sm font-semibold rounded-full hover:bg-[#8C6A4F] transition">
-                                Book Now
+                        <div class="flex gap-2">
+                            <a href="{{ route('room.show', $room->id_room) }}" class="px-4 sm:px-5 py-2 bg-white text-gray-900 border border-gray-200 text-xs sm:text-sm font-semibold rounded-full hover:bg-gray-50 transition">
+                                Detail
                             </a>
-                        @elseif ($room->status === 'perbaikan')
-                            <span class="px-4 sm:px-5 py-2 bg-amber-100 text-amber-700 text-xs sm:text-sm font-semibold rounded-full cursor-not-allowed">
-                                Dalam Perbaikan
-                            </span>
-                        @else
-                            <span class="px-4 sm:px-5 py-2 bg-red-100 text-red-600 text-xs sm:text-sm font-semibold rounded-full cursor-not-allowed">
-                                Kamar Penuh
-                            </span>
-                        @endif
+                            @if ($isBookable)
+                                <a href="{{ route('booking.create', ['room_id' => $room->id_room]) }}" class="px-4 sm:px-5 py-2 bg-gray-900 text-white text-xs sm:text-sm font-semibold rounded-full hover:bg-[#8C6A4F] transition">
+                                    Book Now
+                                </a>
+                            @elseif ($room->status === 'perbaikan')
+                                <span class="px-4 sm:px-5 py-2 bg-amber-100 text-amber-700 text-xs sm:text-sm font-semibold rounded-full cursor-not-allowed">
+                                    Diperbaiki
+                                </span>
+                            @else
+                                <span class="px-4 sm:px-5 py-2 bg-red-100 text-red-600 text-xs sm:text-sm font-semibold rounded-full cursor-not-allowed">
+                                    Penuh
+                                </span>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -212,6 +244,16 @@
                 <p class="text-gray-500 text-lg">Maaf, saat ini belum ada kamar yang tersedia.</p>
             </div>
             @endforelse
+        </div>
+
+        <!-- Selengkapnya Button -->
+        <div id="selengkapnya-container" class="mt-12 text-center" style="display: none;">
+            <button id="btn-selengkapnya" class="px-8 py-3 bg-[#8C6A4F] text-white rounded-full font-semibold hover:bg-[#5C4533] transition shadow-md hover:shadow-lg inline-flex items-center gap-2 group">
+                <span>Selengkapnya</span>
+                <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
         </div>
     </div>
 </section>
@@ -226,25 +268,25 @@
         
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 gs-gallery">
             <div class="sm:col-span-2 sm:row-span-2 relative rounded-2xl overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Kampus" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" />
+                <img src="{{ asset('assets/img/home/kampus.jpg') }}" alt="Kampus" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
                     <h3 class="text-white font-bold text-2xl font-outfit">Kampus Terdekat</h3>
                 </div>
             </div>
             <div class="relative rounded-2xl overflow-hidden h-48 group">
-                <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Cafe" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" />
+                <img src="{{ asset('assets/img/home/cafe.jpg') }}" alt="Cafe" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
                     <h3 class="text-white font-bold font-outfit">Cafe & Resto</h3>
                 </div>
             </div>
             <div class="relative rounded-2xl overflow-hidden h-48 group">
-                <img src="https://images.unsplash.com/photo-1534430239143-7f415309195b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Minimarket" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" />
+                <img src="{{ asset('assets/img/home/minimarket.jpg') }}" alt="Minimarket" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
                     <h3 class="text-white font-bold font-outfit">Minimarket</h3>
                 </div>
             </div>
             <div class="sm:col-span-2 relative rounded-2xl overflow-hidden h-48 group">
-                <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Rumah Sakit" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" />
+                <img src="{{ asset('assets/img/home/hospital.jpg') }}" alt="Rumah Sakit" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
                     <h3 class="text-white font-bold font-outfit">Rumah Sakit / Klinik</h3>
                 </div>
@@ -264,8 +306,10 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-6">
             @foreach($testimonials as $testi)
             <div class="bg-white rounded-2xl p-6 gs-stagger-testi shadow-xl relative mt-8">
-                <div class="absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full border-4 border-[#5C4533] overflow-hidden bg-gray-200">
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode($testi['name']) }}&background=8C6A4F&color=fff" alt="{{ $testi['name'] }}" class="w-full h-full object-cover" />
+                <div class="absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full border-4 border-[#5C4533] overflow-hidden bg-[#8C6A4F]">
+                    <div class="w-full h-full flex items-center justify-center text-white font-bold text-lg font-outfit select-none">
+                        {{ collect(explode(' ', $testi['name']))->map(fn($w) => mb_strtoupper(mb_substr($w, 0, 1)))->take(2)->implode('') }}
+                    </div>
                 </div>
                 <div class="pt-8 text-center">
                     <h4 class="font-bold font-outfit text-gray-900">{{ $testi['name'] }}</h4>
@@ -382,6 +426,56 @@
                 ease: "power3.out"
             }
         );
+
+        // Selengkapnya Button Logic
+        const btnSelengkapnya = document.getElementById('btn-selengkapnya');
+        const roomsGrid = document.querySelector('.rooms-grid');
+        const containerSelengkapnya = document.getElementById('selengkapnya-container');
+
+        function updateSelengkapnyaButton() {
+            if (!roomsGrid || !containerSelengkapnya) return;
+            const totalRooms = roomsGrid.querySelectorAll('.room-card-item').length;
+            const width = window.innerWidth;
+            let limit = 6;
+            if (width < 640) {
+                limit = 2;
+            } else if (width < 1024) {
+                limit = 4;
+            }
+
+            if (totalRooms <= limit || roomsGrid.classList.contains('is-expanded')) {
+                containerSelengkapnya.style.display = 'none';
+            } else {
+                containerSelengkapnya.style.display = 'block';
+            }
+        }
+
+        if (btnSelengkapnya && roomsGrid) {
+            btnSelengkapnya.addEventListener('click', () => {
+                const allItems = Array.from(roomsGrid.querySelectorAll('.room-card-item'));
+                const width = window.innerWidth;
+                let limit = 6;
+                if (width < 640) {
+                    limit = 2;
+                } else if (width < 1024) {
+                    limit = 4;
+                }
+                const hiddenItems = allItems.slice(limit);
+
+                roomsGrid.classList.add('is-expanded');
+                containerSelengkapnya.style.display = 'none';
+
+                if (hiddenItems.length > 0 && typeof gsap !== 'undefined') {
+                    gsap.fromTo(hiddenItems, 
+                        { y: 30, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" }
+                    );
+                }
+            });
+
+            updateSelengkapnyaButton();
+            window.addEventListener('resize', updateSelengkapnyaButton);
+        }
 
         gsap.fromTo(".gs-stagger-testi", 
             { scale: 0.9, opacity: 0 },

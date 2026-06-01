@@ -127,7 +127,11 @@ class BookingService
     }
 
     /**
-     * Expire unpaid bookings older than 24 hours
+     * Delete unpaid bookings older than 24 hours.
+     *
+     * The Booking model's `deleting` event automatically handles:
+     * - Deleting the related payment record
+     * - Restoring the room status to 'tersedia' when appropriate
      */
     public function expireOldBookings(): int
     {
@@ -137,18 +141,8 @@ class BookingService
 
         $count = 0;
         foreach ($expiredBookings as $booking) {
-            $booking->update(['status' => 'cancelled']);
-
-            // Re-enable room if no other active bookings
-            $otherActive = Booking::where('rooms_id_room', $booking->rooms_id_room)
-                ->whereIn('status', ['pending', 'confirmed'])
-                ->where('id_booking', '!=', $booking->id_booking)
-                ->exists();
-
-            if (!$otherActive) {
-                $booking->room->update(['status' => 'tersedia']);
-            }
-
+            \Log::info("Auto-deleting expired booking #{$booking->id_booking} (Invoice: {$booking->invoice_number}), created at {$booking->created_at}");
+            $booking->delete();
             $count++;
         }
 

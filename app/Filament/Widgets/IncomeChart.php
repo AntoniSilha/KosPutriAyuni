@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class IncomeChart extends ChartWidget
 {
+    protected static bool $isLazy = true;
     protected ?string $heading = 'Grafik Pendapatan (6 Bulan Terakhir)';
     protected static ?int $sort = 2;
 

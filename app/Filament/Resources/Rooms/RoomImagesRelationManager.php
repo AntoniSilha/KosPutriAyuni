@@ -33,9 +33,13 @@ class RoomImagesRelationManager extends RelationManager
                 FileUpload::make('img_url')
                     ->label('Upload Foto Kamar')
                     ->image()
+                    ->disk('public')
                     ->directory('rooms')
                     ->required()
                     ->columnSpanFull()
+                    ->afterStateHydrated(function (FileUpload $component, ?RoomImage $record) {
+                        $component->state($record?->getRawImgUrl());
+                    })
                     ->helperText('Unggah file gambar dari komputer Anda (jpg, png, webp).'),
             ]);
     }

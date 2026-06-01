@@ -3,7 +3,7 @@
         $data = $this->getDashboardData();
         $booking = $data['booking'];
         $room = $data['room'];
-        $roomImage = $room?->images?->first()?->img_url ?? asset('assets/img/TampilanKos.jpeg');
+        $roomImage = $room?->images?->first()?->img_url ?? asset('assets/img/room/room_fallback.jpg');
         $daysLeft = $data['daysLeft'];
     @endphp
 
@@ -83,7 +83,7 @@
             </div>
 
             <div class="kos-room-photo">
-                <img src="{{ $roomImage }}" alt="Kamar Kos Putri Ayuni">
+                <img src="{{ $roomImage }}" alt="Kamar Kos Putri Ayuni" loading="lazy">
             </div>
         </section>
 

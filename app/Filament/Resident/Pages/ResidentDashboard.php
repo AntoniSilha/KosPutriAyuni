@@ -20,6 +20,8 @@ class ResidentDashboard extends Dashboard
 
     public function getDashboardData(): array
     {
+        app(\App\Services\BookingService::class)->expireOldBookings();
+
         // First look for any pending booking (for payment/extension)
         $pendingBooking = Booking::query()
             ->with(['room.images', 'payment.billingPenghuni'])

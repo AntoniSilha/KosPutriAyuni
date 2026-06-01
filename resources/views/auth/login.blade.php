@@ -6,7 +6,7 @@
 <div class="min-h-screen bg-[#f7f2ea] text-slate-900">
     <div class="grid min-h-screen lg:grid-cols-[1.05fr_0.95fr]">
         <section class="relative hidden overflow-hidden bg-[#26382f] lg:block">
-            <img src="{{ asset('assets/img/TampilanKos.jpeg') }}" alt="Kos Putri Ayuni" class="absolute inset-0 h-full w-full object-cover opacity-75">
+            <img src="{{ asset('assets/img/auth/auth_bg.jpeg') }}" alt="Kos Putri Ayuni" class="absolute inset-0 h-full w-full object-cover opacity-75" loading="lazy">
             <div class="absolute inset-0 bg-[#17231d]/55"></div>
             <div class="relative z-10 flex h-full flex-col justify-between p-10 xl:p-14">
                 <a href="{{ route('home') }}" class="inline-flex w-fit items-center gap-3 text-white">
@@ -45,7 +45,7 @@
         <main class="flex min-h-screen items-center justify-center px-5 py-8 sm:px-8 lg:px-12">
             <div class="w-full max-w-md">
                 <div class="mb-6 overflow-hidden rounded-lg bg-[#26382f] shadow-lg lg:hidden">
-                    <img src="{{ asset('assets/img/TampilanKos.jpeg') }}" alt="Kos Putri Ayuni" class="h-40 w-full object-cover opacity-85">
+                    <img src="{{ asset('assets/img/auth/auth_bg.jpeg') }}" alt="Kos Putri Ayuni" class="h-40 w-full object-cover opacity-85" loading="lazy">
                 </div>
 
                 <a href="{{ route('home') }}" class="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-[#58735d] hover:text-[#26382f]">

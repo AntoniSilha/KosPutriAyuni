@@ -18,6 +18,8 @@ class BookingController extends Controller
      */
     public function create(Request $request)
     {
+        $this->bookingService->expireOldBookings();
+
         $rooms = Room::with('images')->tersedia()->get();
 
         $selectedRoom = null;
@@ -33,6 +35,8 @@ class BookingController extends Controller
      */
     public function store(BookingRequest $request)
     {
+        $this->bookingService->expireOldBookings();
+
         $user = auth()->user();
         
         // Prevent multiple bookings per user

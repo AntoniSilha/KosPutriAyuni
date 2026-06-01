@@ -25,6 +25,11 @@ class AdminDashboard extends Dashboard
 
     public function getDashboardData(): array
     {
+        $deletedCount = app(\App\Services\BookingService::class)->expireOldBookings();
+        if ($deletedCount > 0) {
+            Cache::forget('admin_dashboard_data');
+        }
+
         return Cache::remember('admin_dashboard_data', 300, function () {
             $totalRooms = Room::count();
             $occupiedRooms = Booking::query()
