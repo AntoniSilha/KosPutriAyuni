@@ -77,7 +77,7 @@ Di sisi pengelola, tersedia **Dashboard Admin (Filament v5)** yang modern untuk 
 | **Admin Panel** | [Filament](https://filamentphp.com/) | v5.0 |
 | **Frontend** | Blade Templating + [Tailwind CSS](https://tailwindcss.com/) | Tailwind v4 |
 | **Build Tool** | [Vite](https://vitejs.dev/) | 7.x |
-| **Database** | SQLite (default) / MySQL | - |
+| **Database** | MySQL | - |
 | **Payment Gateway** | [Midtrans Snap API](https://midtrans.com/) | PHP SDK v2.6 |
 | **WhatsApp Gateway** | [Fonnte API](https://fonnte.com/) | - |
 | **Animasi** | [GSAP](https://greensock.com/gsap/) + ScrollTrigger | CDN |
