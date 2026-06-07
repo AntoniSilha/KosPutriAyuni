@@ -228,7 +228,7 @@ config/
 ├── app.php                 # Konfigurasi umum Laravel (timezone, locale, dll)
 ├── auth.php                # Guard & provider autentikasi
 ├── cache.php               # Driver cache
-├── database.php            # Koneksi database (SQLite/MySQL)
+├── database.php            # Koneksi database (MySQL)
 ├── filesystems.php         # Disk storage (local, public, s3)
 ├── livewire.php            # Konfigurasi Livewire (digunakan oleh Filament)
 ├── logging.php             # Channel logging
