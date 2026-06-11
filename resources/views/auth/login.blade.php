@@ -6,7 +6,7 @@
 <div class="min-h-screen bg-[#f7f2ea] text-slate-900">
     <div class="grid min-h-screen lg:grid-cols-[1.05fr_0.95fr]">
         <section class="relative hidden overflow-hidden bg-[#26382f] lg:block">
-            <img src="{{ asset('assets/img/auth/auth_bg.jpeg') }}" alt="Kos Putri Ayuni" class="absolute inset-0 h-full w-full object-cover opacity-75" loading="lazy">
+            <img src="{{ asset('assets/img/auth/tampakdepan.png') }}" alt="Kos Putri Ayuni" class="absolute inset-0 h-full w-full object-cover opacity-75" loading="lazy">
             <div class="absolute inset-0 bg-[#17231d]/55"></div>
             <div class="relative z-10 flex h-full flex-col justify-between p-10 xl:p-14">
                 <a href="{{ route('home') }}" class="inline-flex w-fit items-center gap-3 text-white">
@@ -68,7 +68,7 @@
                                 <ul class="space-y-1">
                                     @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
-                                    @endforeach
+                                    @endforeachPF
                                 </ul>
                             </div>
                         @endif
