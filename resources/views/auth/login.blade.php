@@ -68,7 +68,7 @@
                                 <ul class="space-y-1">
                                     @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
-                                    @endforeachPF
+                                    @endforeach
                                 </ul>
                             </div>
                         @endif
