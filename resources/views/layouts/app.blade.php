@@ -173,8 +173,10 @@
                         </form>
                     @else
                         <a href="{{ route('login') }}" class="flex items-center gap-2 px-8 py-2.5 rounded-full text-white font-bold tracking-wider btn-premium-login">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
                             LOGIN
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5h-6A2.25 2.25 0 0 0 5.25 6.75v10.5A2.25 2.25 0 0 0 7.5 19.5h6M19.5 12l-3-3m3 3l-3 3m3-3H9" />
+                            </svg>
                         </a>
                     @endif
                 </div>
