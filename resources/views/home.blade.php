@@ -270,25 +270,25 @@
             <div class="sm:col-span-2 sm:row-span-2 relative rounded-2xl overflow-hidden group">
                 <img src="{{ asset('assets/img/home/kampus.jpg') }}" alt="Kampus" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
-                    <h3 class="text-white font-bold text-2xl font-outfit">Kampus Terdekat</h3>
+                    <h3 class="text-white font-bold text-2xl font-outfit">Politeknik Negeri Banyuwangi</h3>
                 </div>
             </div>
             <div class="relative rounded-2xl overflow-hidden h-48 group">
                 <img src="{{ asset('assets/img/home/cafe.jpg') }}" alt="Cafe" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
-                    <h3 class="text-white font-bold font-outfit">Cafe & Resto</h3>
+                    <h3 class="text-white font-bold font-outfit">Hachi Coffee</h3>
                 </div>
             </div>
             <div class="relative rounded-2xl overflow-hidden h-48 group">
-                <img src="{{ asset('assets/img/home/minimarket.jpg') }}" alt="Minimarket" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
+                <img src="{{ asset('assets/img/home/puskesmasgitik.jpg') }}" alt="Puskesmas" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
-                    <h3 class="text-white font-bold font-outfit">Minimarket</h3>
+                    <h3 class="text-white font-bold font-outfit">Puskesmas Gitik</h3>
                 </div>
             </div>
             <div class="sm:col-span-2 relative rounded-2xl overflow-hidden h-48 group">
-                <img src="{{ asset('assets/img/home/hospital.jpg') }}" alt="Rumah Sakit" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
+                <img src="{{ asset('assets/img/home/stasiunrogojampi.jpg') }}" alt="Stasiun" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
-                    <h3 class="text-white font-bold font-outfit">Rumah Sakit / Klinik</h3>
+                    <h3 class="text-white font-bold font-outfit">Stasiun Rogojampi</h3>
                 </div>
             </div>
         </div>
