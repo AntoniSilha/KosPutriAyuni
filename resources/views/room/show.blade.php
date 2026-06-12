@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Kamar ' . $room->no_kamar . ' - Kos Putri Ayuni')
-@section('meta_description', 'Detail Kamar ' . $room->no_kamar . ' - ' . ($room->deskripsi ?: 'Reguler') . '. Harga ' . $room->formatted_price . '/bulan. Fasilitas lengkap, WiFi gratis, listrik gratis.')
+@section('meta_description', 'Detail Kamar ' . $room->no_kamar . ' - ' . ($room->deskripsi['tipe_kamar'] ?? 'Reguler') . '. Harga ' . $room->formatted_price . '/bulan. Fasilitas lengkap, WiFi gratis, listrik gratis.')
 
 @php
     $statusBadge = match($room->status) {
@@ -28,7 +28,7 @@
         {{-- Header --}}
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gs-fade-up">
             <div>
-                <div class="text-xs font-bold text-[#8C6A4F] uppercase tracking-widest mb-1">{{ $room->deskripsi ?: 'Reguler' }}</div>
+                <div class="text-xs font-bold text-[#8C6A4F] uppercase tracking-widest mb-1">{{ $room->deskripsi['tipe_kamar'] ?? 'Reguler' }}</div>
                 <h1 class="text-3xl sm:text-4xl font-bold font-outfit text-gray-900">Kamar {{ $room->no_kamar }}</h1>
             </div>
             <span class="mt-3 sm:mt-0 inline-flex items-center px-4 py-1.5 rounded-full text-sm font-bold border {{ $statusBadge['color'] }}">
@@ -99,7 +99,7 @@
                 <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-gray-100 gs-fade-up">
                     <h2 class="text-2xl font-bold font-outfit text-gray-900 mb-4">Tentang Kamar</h2>
                     <p class="text-gray-600 leading-relaxed">
-                        Kamar {{ $room->no_kamar }} dengan tipe <strong>{{ $room->deskripsi ?: 'Reguler' }}</strong> adalah hunian nyaman dan bersih yang dirancang khusus untuk putri. Dilengkapi dengan perabotan lengkap (full furnished), kamar ini menawarkan kenyamanan layaknya di rumah sendiri. Lokasi strategis dekat kampus, minimarket, dan fasilitas umum lainnya menjadikan kamar ini pilihan tepat untuk mendukung aktivitas sehari-hari Anda.
+                        Kamar {{ $room->no_kamar }} dengan tipe <strong>{{ $room->deskripsi['tipe_kamar'] ?? 'Reguler' }}</strong> adalah hunian nyaman dan bersih yang dirancang khusus untuk putri. {{ !empty($room->deskripsi['teks_deskripsi']) ? $room->deskripsi['teks_deskripsi'] : 'Dilengkapi dengan perabotan lengkap, kamar ini menawarkan kenyamanan layaknya di rumah sendiri. Lokasi strategis dekat kampus, minimarket, dan fasilitas umum lainnya menjadikan kamar ini pilihan tepat untuk mendukung aktivitas sehari-hari Anda.' }}
                     </p>
                 </div>
 
@@ -257,7 +257,7 @@
                         </div>
                     </div>
                     <div class="p-4">
-                        <div class="text-xs font-bold text-[#8C6A4F] uppercase tracking-wider mb-1">{{ $other->deskripsi ?: 'Reguler' }}</div>
+                        <div class="text-xs font-bold text-[#8C6A4F] uppercase tracking-wider mb-1">{{ $other->deskripsi['tipe_kamar'] ?? 'Reguler' }}</div>
                         <h3 class="text-lg font-bold font-outfit text-gray-900 mb-1">Kamar {{ $other->no_kamar }}</h3>
                         <div class="flex items-baseline gap-1">
                             <span class="font-bold text-[#8C6A4F]">{{ $other->formatted_price }}</span>

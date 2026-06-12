@@ -44,7 +44,7 @@ class RoomResource extends Resource
                     ->maxLength(3)
                     ->label('Nomor Kamar')
                     ->helperText('Maksimal 3 karakter (contoh: 01, A1).'),
-                Select::make('deskripsi')
+                Select::make('deskripsi.tipe_kamar')
                     ->label('Kategori Kamar')
                     ->options([
                         'Reguler' => 'Reguler',
@@ -52,6 +52,10 @@ class RoomResource extends Resource
                     ])
                     ->required()
                     ->helperText('Pilih kategori kamar. Kategori ini akan menentukan label di halaman depan.'),
+                Textarea::make('deskripsi.teks_deskripsi')
+                    ->label('Deskripsi Kamar')
+                    ->helperText('Isi penjelasan detail mengenai fasilitas atau deskripsi kamar.')
+                    ->columnSpanFull(),
                 TextInput::make('harga_perbulan')
                     ->required()
                     ->numeric()
@@ -76,7 +80,7 @@ class RoomResource extends Resource
                 TextColumn::make('no_kamar')
                     ->label('No. Kamar')
                     ->searchable(),
-                TextColumn::make('deskripsi')
+                TextColumn::make('deskripsi.tipe_kamar')
                     ->label('Kategori')
                     ->badge()
                     ->placeholder('Belum diatur'),
