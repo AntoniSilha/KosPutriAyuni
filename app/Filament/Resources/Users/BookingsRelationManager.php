@@ -37,7 +37,7 @@ class BookingsRelationManager extends RelationManager
                         Room::where('status', 'tersedia')
                             ->get()
                             ->mapWithKeys(fn (Room $room) => [
-                                $room->id_room => "Kamar {$room->no_kamar} — {$room->formatted_price}/bln ({$room->deskripsi})"
+                                $room->id_room => "Kamar {$room->no_kamar} — {$room->formatted_price}/bln"
                             ])
                     )
                     ->required()
@@ -76,8 +76,8 @@ class BookingsRelationManager extends RelationManager
                 TextColumn::make('room.no_kamar')
                     ->label('No. Kamar'),
                 TextColumn::make('room.deskripsi')
-                    ->label('Kategori')
-                    ->badge()
+                    ->label('Deskripsi')
+                    ->limit(30)
                     ->placeholder('-'),
                 TextColumn::make('check_in')
                     ->label('Check-in')

@@ -24,7 +24,6 @@ class Room extends Model
     {
         return [
             'harga_perbulan' => 'decimal:0',
-            'deskripsi' => 'array',
         ];
     }
 

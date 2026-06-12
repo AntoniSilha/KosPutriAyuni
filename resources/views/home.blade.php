@@ -201,7 +201,7 @@
                 <div class="p-5 sm:p-6">
                     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4">
                         <div class="mb-3 sm:mb-0">
-                            <div class="text-xs sm:text-[10px] font-bold text-[#8C6A4F] uppercase tracking-wider sm:tracking-widest mb-1">{{ $room->deskripsi['tipe_kamar'] ?? 'Reguler' }}</div>
+                            <div class="text-xs sm:text-[10px] font-bold text-[#8C6A4F] uppercase tracking-wider sm:tracking-widest mb-1">Kamar Putri</div>
                             <h3 class="text-xl sm:text-2xl font-bold font-outfit text-gray-900 mb-1 sm:mb-0">Kamar {{ $room->no_kamar }}</h3>
                         </div>
                         <div class="flex items-baseline gap-1 sm:block sm:text-right">
@@ -210,7 +210,7 @@
                         </div>
                     </div>
                     <p class="text-gray-600 mb-6 line-clamp-2 text-sm leading-relaxed">
-                        {{ !empty($room->deskripsi['teks_deskripsi']) ? $room->deskripsi['teks_deskripsi'] : ('Tipe ' . ($room->deskripsi['tipe_kamar'] ?? 'Reguler') . ' - Hunian nyaman dan bersih dengan fasilitas terbaik untuk kenyamanan aktivitas Anda sehari-hari.') }}
+                        {{ $room->deskripsi ?: 'Kamar hunian nyaman dan bersih dengan fasilitas terbaik untuk kenyamanan aktivitas Anda sehari-hari.' }}
                     </p>
                     <div class="border-t border-gray-100 pt-3 sm:pt-4 flex justify-between items-center">
                         <div class="flex gap-2 text-gray-400">

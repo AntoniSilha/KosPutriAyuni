@@ -40,7 +40,6 @@ class AdminDashboard extends Dashboard
             $availableRooms = Room::tersedia()->count();
             $occupancyRate = $totalRooms > 0 ? round(($occupiedRooms / $totalRooms) * 100, 1) : 0;
 
-            $roomTypes = $this->getRoomTypeCounts();
             $currentMonth = now();
             $monthlyIncome = Payment::query()
                 ->where('payment_status', 'approve')
@@ -58,8 +57,7 @@ class AdminDashboard extends Dashboard
                 'occupiedRooms' => $occupiedRooms,
                 'availableRooms' => $availableRooms,
                 'occupancyRate' => $occupancyRate,
-                'regularRooms' => $roomTypes['regular'],
-                'largeRooms' => $roomTypes['large'],
+                'occupancyRate' => $occupancyRate,
                 'monthlyIncome' => $monthlyIncome,
                 'outstanding' => $outstanding,
                 'refunds' => $refunds,
@@ -76,28 +74,7 @@ class AdminDashboard extends Dashboard
         });
     }
 
-    protected function getRoomTypeCounts(): array
-    {
-        $regular = 0;
-        $large = 0;
 
-        Room::query()->get(['deskripsi', 'harga_perbulan'])->each(function (Room $room) use (&$regular, &$large): void {
-            $description = strtolower((string) $room->deskripsi);
-
-            if (str_contains($description, 'large') || str_contains($description, 'besar')) {
-                $large++;
-
-                return;
-            }
-
-            $regular++;
-        });
-
-        return [
-            'regular' => $regular,
-            'large' => $large,
-        ];
-    }
 
     protected function getResidentTrend(): array
     {

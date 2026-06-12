@@ -110,7 +110,6 @@ class ResidentDashboard extends Dashboard
             'dueDate' => $dueDate,
             'daysLeft' => $daysLeft,
             'paymentUrl' => $booking ? route('pesanan.show', $booking->id_booking) : route('booking.create'),
-            'roomType' => $this->getRoomTypeLabel($room?->deskripsi),
             'roomNumber' => $room?->no_kamar ?? '-',
             'leaseStatus' => $booking?->status === 'confirmed' ? 'Aktif' : ($booking ? 'Menunggu pembayaran' : 'Belum ada sewa'),
             'announcements' => $announcements,
@@ -187,12 +186,7 @@ class ResidentDashboard extends Dashboard
         return $booking->check_in ? 'Mulai ' . Carbon::parse($booking->check_in)->translatedFormat('d F Y') : 'Periode berjalan';
     }
 
-    protected function getRoomTypeLabel(?string $description): string
-    {
-        $description = strtolower((string) $description);
 
-        return (str_contains($description, 'large') || str_contains($description, 'besar')) ? 'Large' : 'Reguler';
-    }
 
     public function formatCurrency(float | int | null $amount): string
     {

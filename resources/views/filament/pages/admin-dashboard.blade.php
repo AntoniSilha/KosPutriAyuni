@@ -25,14 +25,7 @@
 
             <div class="kos-room-summary">
                 <p class="kos-eyebrow">Total kamar: {{ $data['totalRooms'] }}</p>
-                <div class="kos-room-row">
-                    <span>Reguler</span>
-                    <strong>{{ $data['regularRooms'] }}</strong>
-                </div>
-                <div class="kos-room-row">
-                    <span>Large</span>
-                    <strong>{{ $data['largeRooms'] }}</strong>
-                </div>
+
                 <div class="kos-room-row" style="border-bottom: none; padding-bottom: 0;">
                     <span>Terisi</span>
                     <strong>{{ $data['occupiedRooms'] }}</strong>

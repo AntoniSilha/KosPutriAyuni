@@ -111,10 +111,7 @@
 
             <aside class="kos-room-info-card">
                 <p class="kos-eyebrow">Informasi kamar</p>
-                <div>
-                    <span>Tipe kamar</span>
-                    <strong>{{ $data['roomType'] }}</strong>
-                </div>
+
                 <div>
                     <span>No. kamar</span>
                     <strong>{{ $data['roomNumber'] }}</strong>
