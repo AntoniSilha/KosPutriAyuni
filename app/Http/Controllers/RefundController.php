@@ -55,10 +55,21 @@ class RefundController extends Controller
 
             // 4. Update room status to tersedia if no other active bookings
             if ($booking->room && $booking->room->status === 'tidak tersedia') {
-                $hasOtherActiveBookings = Booking::where('rooms_id_room', $booking->rooms_id_room)
+                $otherActiveBookings = Booking::where('rooms_id_room', $booking->rooms_id_room)
                     ->whereIn('status', ['pending', 'confirmed'])
                     ->where('id_booking', '!=', $booking->id_booking)
-                    ->exists();
+                    ->with(['payment', 'room'])
+                    ->get();
+
+                // Filter: only count bookings that are truly active
+                // (pending, or confirmed with an active lease)
+                $hasOtherActiveBookings = $otherActiveBookings->contains(function ($b) {
+                    if ($b->status === 'pending') {
+                        return true;
+                    }
+                    // For confirmed bookings, check if lease is still active
+                    return !$b->isLeaseExpired();
+                });
 
                 if (!$hasOtherActiveBookings) {
                     $booking->room->update(['status' => 'tersedia']);

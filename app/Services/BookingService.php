@@ -127,7 +127,7 @@ class BookingService
     }
 
     /**
-     * Delete unpaid bookings older than 24 hours.
+     * Delete unpaid bookings older than 24 hours and expire completed leases.
      *
      * The Booking model's `deleting` event automatically handles:
      * - Deleting the related payment record
@@ -135,15 +135,54 @@ class BookingService
      */
     public function expireOldBookings(): int
     {
+        $count = 0;
+
+        // 1. Delete pending bookings older than 24 hours
         $expiredBookings = Booking::where('status', 'pending')
             ->where('created_at', '<', now()->subHours(24))
             ->get();
 
-        $count = 0;
         foreach ($expiredBookings as $booking) {
             \Log::info("Auto-deleting expired booking #{$booking->id_booking} (Invoice: {$booking->invoice_number}), created at {$booking->created_at}");
             $booking->delete();
             $count++;
+        }
+
+        // 2. Mark confirmed bookings as completed when their lease has ended
+        $confirmedBookings = Booking::where('status', 'confirmed')
+            ->with(['payment', 'room'])
+            ->get();
+
+        foreach ($confirmedBookings as $booking) {
+            if ($booking->isLeaseExpired()) {
+                \Log::info("Auto-completing expired lease for booking #{$booking->id_booking} (Invoice: {$booking->invoice_number}), lease ended at {$booking->getLeaseEndDate()}");
+
+                $booking->update(['status' => 'cancelled']);
+
+                // Free up the room if no other truly active bookings exist
+                if ($booking->room && $booking->room->status === 'tidak tersedia') {
+                    $hasOtherActive = Booking::where('rooms_id_room', $booking->rooms_id_room)
+                        ->where('id_booking', '!=', $booking->id_booking)
+                        ->where(function ($q) {
+                            $q->where('status', 'pending')
+                              ->orWhere('status', 'confirmed');
+                        })
+                        ->get()
+                        ->contains(function ($b) {
+                            if ($b->status === 'pending') {
+                                return true;
+                            }
+                            return !$b->isLeaseExpired();
+                        });
+
+                    if (!$hasOtherActive) {
+                        $booking->room->update(['status' => 'tersedia']);
+                        \Log::info("Room #{$booking->rooms_id_room} set back to 'tersedia'");
+                    }
+                }
+
+                $count++;
+            }
         }
 
         return $count;

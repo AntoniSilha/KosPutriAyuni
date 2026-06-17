@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -21,10 +22,19 @@ class Booking extends Model
             }
             // Kembalikan status kamar menjadi tersedia jika pesanan dihapus dan tidak ada pesanan aktif lainnya
             if ($booking->room && $booking->room->status === 'tidak tersedia') {
-                $hasOtherActiveBookings = static::where('rooms_id_room', $booking->rooms_id_room)
+                $otherActiveBookings = static::where('rooms_id_room', $booking->rooms_id_room)
                     ->whereIn('status', ['pending', 'confirmed'])
                     ->where('id_booking', '!=', $booking->id_booking)
-                    ->exists();
+                    ->get();
+
+                // Filter out confirmed bookings whose lease has already expired
+                $hasOtherActiveBookings = $otherActiveBookings->contains(function ($b) {
+                    if ($b->status === 'pending') {
+                        return true;
+                    }
+                    // For confirmed bookings, check if lease is still active
+                    return !$b->isLeaseExpired();
+                });
 
                 if (!$hasOtherActiveBookings) {
                     $booking->room->update(['status' => 'tersedia']);
@@ -101,6 +111,42 @@ class Booking extends Model
         return $this->status === 'pending'
             && $this->created_at
             && $this->created_at->addHours(24)->isPast();
+    }
+
+    /**
+     * Calculate the lease end date based on check_in and payment amount.
+     * Returns null if data is insufficient.
+     */
+    public function getLeaseEndDate(): ?Carbon
+    {
+        if (!$this->check_in) {
+            return null;
+        }
+
+        $checkIn = Carbon::parse($this->check_in);
+        $payment = $this->payment;
+        $room = $this->room;
+
+        if ($payment && $room && $room->harga_perbulan > 0) {
+            $months = max(1, (int) round($payment->total_pembayaran / $room->harga_perbulan));
+            return $checkIn->copy()->addMonths($months);
+        }
+
+        // Fallback: assume 1 month lease
+        return $checkIn->copy()->addMonth();
+    }
+
+    /**
+     * Check if a confirmed booking's lease period has ended.
+     */
+    public function isLeaseExpired(): bool
+    {
+        if ($this->status !== 'confirmed') {
+            return false;
+        }
+
+        $leaseEnd = $this->getLeaseEndDate();
+        return $leaseEnd && $leaseEnd->isPast();
     }
 
     /**
