@@ -211,10 +211,13 @@
             if (typeof ScrollTrigger !== 'undefined') {
                 ScrollTrigger.refresh();
             }
-            gsap.utils.toArray('.gs-fade-up').forEach(el => {
-                gsap.fromTo(el, { y: 40, opacity: 0 }, {
-                    scrollTrigger: { trigger: el, start: "top 90%" },
-                    y: 0, opacity: 1, duration: 0.8, ease: "power3.out"
+            let mm = gsap.matchMedia();
+            mm.add("(min-width: 768px)", () => {
+                gsap.utils.toArray('.gs-fade-up').forEach(el => {
+                    gsap.fromTo(el, { y: 40, opacity: 0 }, {
+                        scrollTrigger: { trigger: el, start: "top 90%" },
+                        y: 0, opacity: 1, duration: 0.8, ease: "power3.out"
+                    });
                 });
             });
         }

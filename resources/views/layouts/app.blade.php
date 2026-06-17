@@ -127,6 +127,7 @@
         }
         #page-progress.active { opacity: 1; }
 
+
         .page-content { animation: pageIn 0.25s ease-out; }
         @keyframes pageIn {
             from { opacity: 0; transform: translateY(6px); }
@@ -134,7 +135,7 @@
         }
     </style>
 </head>
-<body class="cream-bg text-gray-800 antialiased">
+<body class="cream-bg text-gray-800 antialiased overflow-x-hidden">
 
     <!-- Progress Bar -->
     <div id="page-progress"></div>
@@ -143,23 +144,22 @@
     @if(!Route::is('login') && !Route::is('register') && !Route::is('password.request') && !Route::is('password.reset'))
     <nav id="mainNav" class="fixed w-full z-50 transition-all duration-300 {{ Route::is('home') ? 'bg-transparent text-white' : 'bg-white shadow-sm text-gray-800' }}">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex-shrink-0 flex items-center gap-2">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                    <span class="font-outfit font-bold text-2xl tracking-tight">Kos Ayuni</span>
+            <div class="flex justify-between items-center h-20 w-full relative">
+                <div class="flex lg:flex-1 justify-start items-center gap-2 z-20">
+                    <svg class="w-8 h-8 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    <span class="font-outfit font-bold text-2xl tracking-tight flex-shrink-0 whitespace-nowrap">Kos Ayuni</span>
                 </div>
                 
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="{{ route('home') }}" class="font-medium hover:text-[#8C6A4F] transition-colors">Home</a>
-                    <a href="{{ route('home') }}#tipe-kamar" class="font-medium hover:text-[#8C6A4F] transition-colors">Tipe Kamar</a>
-
-                    <a href="{{ route('about') }}" class="font-medium hover:text-[#8C6A4F] transition-colors">About Us</a>
+                <div class="hidden md:flex flex-shrink-0 justify-center items-center gap-6 lg:gap-8 z-10">
+                    <a href="{{ route('home') }}" class="font-medium hover:text-[#8C6A4F] transition-colors whitespace-nowrap">Home</a>
+                    <a href="{{ route('home') }}#tipe-kamar" class="font-medium hover:text-[#8C6A4F] transition-colors whitespace-nowrap">Tipe Kamar</a>
+                    <a href="{{ route('about') }}" class="font-medium hover:text-[#8C6A4F] transition-colors whitespace-nowrap">About Us</a>
                     @if(auth()->check() && !auth()->user()->isAdmin())
-                        <a href="{{ auth()->user()->booking ? route('pesanan.show', auth()->user()->booking->id_booking) : route('pesanan.index') }}" class="font-medium hover:text-[#8C6A4F] transition-colors">Pesanan</a>
+                        <a href="{{ auth()->user()->booking ? route('pesanan.show', auth()->user()->booking->id_booking) : route('pesanan.index') }}" class="font-medium hover:text-[#8C6A4F] transition-colors whitespace-nowrap">Pesanan</a>
                     @endif
                 </div>
 
-                <div class="hidden md:flex items-center space-x-4">
+                <div class="hidden md:flex lg:flex-1 justify-end items-center space-x-4 z-20">
                     @if(auth()->check())
 
                         @if(auth()->user()->isAdmin())
@@ -182,8 +182,8 @@
                 </div>
                 
                 <!-- Mobile menu button -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobileMenuBtn" class="text-inherit hover:text-gray-600 focus:outline-none">
+                <div class="md:hidden flex justify-end items-center z-20">
+                    <button id="mobileMenuBtn" class="p-2 -mr-2 text-inherit hover:text-gray-600 focus:outline-none">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
@@ -235,7 +235,7 @@
                 <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center gap-2 mb-4">
                         <svg class="w-8 h-8 brown-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                        <span class="font-outfit font-bold text-2xl">Kos Ayuni</span>
+                        <span class="font-outfit font-bold text-[#8C6A4F] text-2xl">Kos Ayuni</span>
                     </div>
                     <p class="text-gray-600 max-w-sm mt-4">
                         Cari kos dekat dengan apapun? Kos Putri Ayuni jawabannya. Nyaman, aman, khusus perempuan.

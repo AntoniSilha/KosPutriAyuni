@@ -342,15 +342,19 @@
             }
         });
 
-        // Hero Content Fade In
-        gsap.from(".gs-hero-content", {
-            y: 50,
-            opacity: 0,
-            duration: 1.5,
-            ease: "power3.out"
-        });
+        // Initialize matchMedia for responsive animations
+        let mm = gsap.matchMedia();
 
-        // Scroll reveals
+        mm.add("(min-width: 768px)", () => {
+            // Hero Content Fade In
+            gsap.from(".gs-hero-content", {
+                y: 50,
+                opacity: 0,
+                duration: 1.5,
+                ease: "power3.out"
+            });
+
+            // Scroll reveals
         gsap.utils.toArray('.gs-fade-up').forEach(element => {
             gsap.fromTo(element, 
                 { y: 50, opacity: 0 },
@@ -425,6 +429,7 @@
                 ease: "power3.out"
             }
         );
+        });
 
         // Selengkapnya Button Logic
         const btnSelengkapnya = document.getElementById('btn-selengkapnya');
@@ -476,7 +481,8 @@
             window.addEventListener('resize', updateSelengkapnyaButton);
         }
 
-        gsap.fromTo(".gs-stagger-testi", 
+        mm.add("(min-width: 768px)", () => {
+            gsap.fromTo(".gs-stagger-testi", 
             { scale: 0.9, opacity: 0 },
             {
                 scrollTrigger: {
@@ -506,6 +512,7 @@
                 ease: "power2.out"
             }
         );
+        });
 
         // Room Gallery Slideshow (Fade)
         const galleries = document.querySelectorAll('.room-gallery-container');
