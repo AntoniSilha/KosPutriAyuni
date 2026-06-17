@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Booking extends Model
 {
@@ -103,6 +104,29 @@ class Booking extends Model
     }
 
     /**
+     * Check if booking can be refunded
+     */
+    public function canBeRefunded(): bool
+    {
+        if ($this->status !== 'confirmed') {
+            return false;
+        }
+
+        if ($this->refund()->exists()) {
+            return false;
+        }
+
+        $hasPreviousConfirmed = self::where('users_id_user', $this->users_id_user)
+            ->where('rooms_id_room', $this->rooms_id_room)
+            ->where('status', 'confirmed')
+            ->where('id_booking', '!=', $this->id_booking)
+            ->where('check_in', '<', $this->check_in)
+            ->exists();
+
+        return $hasPreviousConfirmed;
+    }
+
+    /**
      * Get human-readable status label
      */
     public function getStatusLabelAttribute(): string
@@ -151,5 +175,17 @@ class Booking extends Model
     public function payment(): HasOne
     {
         return $this->hasOne(Payment::class, 'bookings_id_booking');
+    }
+
+    public function refund(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            Refund::class,
+            Payment::class,
+            'bookings_id_booking',
+            'payments_id_payment',
+            'id_booking',
+            'id_payment'
+        );
     }
 }

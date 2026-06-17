@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan.index');
     Route::get('/pesanan/{id}', [PesananController::class, 'show'])->name('pesanan.show');
     Route::get('/pesanan/{id}/invoice', [PesananController::class, 'invoice'])->name('pesanan.invoice');
+    Route::post('/pesanan/{id}/refund', [\App\Http\Controllers\RefundController::class, 'store'])->name('pesanan.refund');
 });
 
 /*

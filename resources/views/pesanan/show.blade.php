@@ -26,6 +26,7 @@
                             'pending' => 'bg-yellow-100 text-yellow-800 border-yellow-200',
                             'confirmed' => 'bg-green-100 text-green-800 border-green-200',
                             'cancelled' => 'bg-red-100 text-red-800 border-red-200',
+                            'refund' => 'bg-blue-100 text-blue-800 border-blue-200',
                             default => 'bg-gray-100 text-gray-800 border-gray-200',
                         };
                         if($booking->isExpired()) $color = 'bg-gray-100 text-gray-600 border-gray-200';
@@ -109,6 +110,27 @@
                     <div class="text-sm text-gray-500 bg-gray-100 rounded-xl px-4 py-3">
                         Pesanan ini telah kedaluwarsa.
                     </div>
+                @elseif ($booking->canBeRefunded())
+                    <button type="button" onclick="openRefundModal()" class="px-8 py-3 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2" style="background-color: #dc2626; color: #ffffff;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3m9 14V5a2 2 0 00-2-2H6a2 2 0 00-2 2v16l4-2 4 2 4-2 4 2z"></path></svg>
+                        Batalkan & Ajukan Refund
+                    </button>
+                @elseif ($booking->status === 'refund')
+                    <div class="w-full">
+                        <div class="text-sm text-blue-700 bg-blue-50 border border-blue-200 rounded-2xl p-4 flex flex-col gap-2">
+                            <div class="flex items-center gap-2 font-bold">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                Pengembalian Dana (Refund) Telah Diproses
+                            </div>
+                            @if($booking->refund)
+                                <div class="text-xs text-blue-600 space-y-1 mt-1 border-t border-blue-100 pt-2">
+                                    <p><strong>Alasan:</strong> {{ $booking->refund->reason }}</p>
+                                    <p><strong>Total Dana:</strong> Rp {{ number_format($booking->refund->total, 0, ',', '.') }}</p>
+                                    <p><strong>Waktu Refund:</strong> {{ $booking->refund->refund_time ? $booking->refund->refund_time->format('d M Y, H:i') : '-' }}</p>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                 @endif
             </div>
         </div>
@@ -158,6 +180,80 @@
         window.addEventListener('pageshow', function(event) {
             if (event.persisted) {
                 window.location.reload();
+            }
+        });
+    </script>
+    @endpush
+@endif
+
+@if($booking->canBeRefunded())
+    <!-- Refund Modal -->
+    <div id="refundModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm transition-opacity" onclick="closeRefundModal()"></div>
+
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div class="relative transform overflow-hidden rounded-3xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-lg border border-gray-100">
+                <!-- Header -->
+                <div class="bg-gray-50 px-6 py-5 border-b border-gray-100 flex justify-between items-center">
+                    <h3 class="text-lg font-bold font-outfit text-gray-900" id="modal-title">Pengajuan Refund Perpanjangan</h3>
+                    <button type="button" onclick="closeRefundModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                
+                <form action="{{ route('pesanan.refund', $booking->id_booking) }}" method="POST" id="refundForm">
+                    @csrf
+                    <!-- Body -->
+                    <div class="px-6 py-6 space-y-4">
+                        <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-amber-800 text-sm">
+                            <p class="font-semibold mb-1">Penting:</p>
+                            <p class="text-xs">Dengan mengajukan pembatalan perpanjangan sewa ini, status sewa Anda akan dihentikan pada masa perpanjangan berikutnya, dan dana yang telah dibayarkan akan di-refund.</p>
+                        </div>
+
+                        <div>
+                            <label for="reason" class="block text-sm font-bold text-gray-700 mb-2">Alasan Pembatalan / Refund <span class="text-red-500">*</span></label>
+                            <textarea id="reason" name="reason" rows="4" required class="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:border-[#8C6A4F] focus:ring-1 focus:ring-[#8C6A4F] outline-none text-sm transition-all" placeholder="Tulis alasan pembatalan Anda di sini (contoh: salah memilih kamar, rencana perpanjangan berubah, dll.)"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 flex flex-col-reverse sm:flex-row justify-end gap-3">
+                        <button type="button" onclick="closeRefundModal()" class="w-full sm:w-auto px-5 py-2.5 bg-white border border-gray-300 rounded-xl text-gray-700 font-bold hover:bg-gray-50 transition-colors text-sm">
+                            Batal
+                        </button>
+                        <button type="submit" id="submitRefundBtn" class="w-full sm:w-auto px-6 py-2.5 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition-colors text-sm shadow-md flex items-center justify-center gap-2" style="background-color: #dc2626; color: #ffffff;">
+                            Kirim Pengajuan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @push('scripts')
+    <script>
+        function openRefundModal() {
+            const modal = document.getElementById('refundModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            }
+        }
+
+        function closeRefundModal() {
+            const modal = document.getElementById('refundModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+        }
+
+        document.getElementById('refundForm').addEventListener('submit', function () {
+            const btn = document.getElementById('submitRefundBtn');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<svg class="animate-spin w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Mengirim...';
             }
         });
     </script>
