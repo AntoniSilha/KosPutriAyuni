@@ -15,23 +15,23 @@ use Illuminate\Support\Facades\Schema;
 
 class AdminDashboard extends Dashboard
 {
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-squares-2x2';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-squares-2x2'; //menampilkan icon sidebar
 
-    protected static ?string $navigationLabel = 'Dashboard';
+    protected static ?string $navigationLabel = 'Dashboard'; //nama menu
 
     protected static ?string $title = 'Dashboard Admin';
 
-    protected string $view = 'filament.pages.admin-dashboard';
+    protected string $view = 'filament.pages.admin-dashboard'; //menentukan tampilan yang akan digunakan diambil dari file admin-dashboard.blade.php
 
-    public function getDashboardData(): array
+    public function getDashboardData(): array //mengambil seluruh data dashboard 
     {
         $deletedCount = app(\App\Services\BookingService::class)->expireOldBookings();
         if ($deletedCount > 0) {
-            Cache::forget('admin_dashboard_data');
+            Cache::forget('admin_dashboard_data'); //menghapus booking kadaluarsa 
         }
 
         return Cache::remember('admin_dashboard_data', 300, function () {
-            $totalRooms = Room::count();
+            $totalRooms = Room::count(); //statistik kamar
             $occupiedRooms = Booking::query()
                 ->whereIn('status', ['pending', 'confirmed'])
                 ->whereNotNull('rooms_id_room')
@@ -52,7 +52,7 @@ class AdminDashboard extends Dashboard
                 ->where('payment_status', 'refund')
                 ->sum('total_pembayaran');
 
-            return [
+            return [ //statistik kamar, pendapatan, dan aktivitas terbaru dan menampilkan di halaman blade
                 'totalRooms' => $totalRooms,
                 'occupiedRooms' => $occupiedRooms,
                 'availableRooms' => $availableRooms,
@@ -64,11 +64,11 @@ class AdminDashboard extends Dashboard
                 'monthLabel' => $currentMonth->translatedFormat('F Y'),
                 'trend' => $this->getResidentTrend(),
                 'activities' => $this->getRecentActivities(),
-                'links' => [
-                    'rooms' => RoomResource::getUrl('index'),
-                    'residents' => UserResource::getUrl('index'),
-                    'addResident' => UserResource::getUrl('create'),
-                    'payments' => PaymentResource::getUrl('index'),
+                'links' => [ //tautan untuk beralih ke halaman tertentu
+                    'rooms' => RoomResource::getUrl('index'), //kamar
+                    'residents' => UserResource::getUrl('index'), //penghuni
+                    'addResident' => UserResource::getUrl('create'), // tambah penghuni
+                    'payments' => PaymentResource::getUrl('index'), //pembayaran 
                 ],
             ];
         });
@@ -139,7 +139,7 @@ class AdminDashboard extends Dashboard
             ->all();
     }
 
-    public function formatCurrency(float | int | null $amount): string
+    public function formatCurrency(float | int | null $amount): string //mengubah format menjadi rupiah 
     {
         return 'Rp ' . number_format((float) $amount, 0, ',', '.');
     }

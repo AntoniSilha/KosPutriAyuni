@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class BillingPenghuni extends Model
 {
     protected $table = 'billingPenghuni';
-    protected $primaryKey = 'id_billing';
+    protected $primaryKey = 'id_billing'; //data private untuk keamanan data
 
     public $timestamps = false;
 
