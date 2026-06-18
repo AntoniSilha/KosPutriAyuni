@@ -248,8 +248,8 @@
         <!-- Selengkapnya Button -->
         <div id="selengkapnya-container" class="mt-12 text-center" style="display: none;">
             <button id="btn-selengkapnya" class="px-8 py-3 bg-[#8C6A4F] text-white rounded-full font-semibold hover:bg-[#5C4533] transition shadow-md hover:shadow-lg inline-flex items-center gap-2 group">
-                <span>Selengkapnya</span>
-                <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span id="btn-selengkapnya-text">Selengkapnya</span>
+                <svg id="btn-selengkapnya-icon" class="w-4 h-4 transition-transform duration-300 group-hover:translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </button>
@@ -433,6 +433,8 @@
 
         // Selengkapnya Button Logic
         const btnSelengkapnya = document.getElementById('btn-selengkapnya');
+        const btnText = document.getElementById('btn-selengkapnya-text');
+        const btnIcon = document.getElementById('btn-selengkapnya-icon');
         const roomsGrid = document.querySelector('.rooms-grid');
         const containerSelengkapnya = document.getElementById('selengkapnya-container');
 
@@ -447,7 +449,7 @@
                 limit = 4;
             }
 
-            if (totalRooms <= limit || roomsGrid.classList.contains('is-expanded')) {
+            if (totalRooms <= limit) {
                 containerSelengkapnya.style.display = 'none';
             } else {
                 containerSelengkapnya.style.display = 'block';
@@ -456,24 +458,49 @@
 
         if (btnSelengkapnya && roomsGrid) {
             btnSelengkapnya.addEventListener('click', () => {
-                const allItems = Array.from(roomsGrid.querySelectorAll('.room-card-item'));
-                const width = window.innerWidth;
-                let limit = 6;
-                if (width < 640) {
-                    limit = 2;
-                } else if (width < 1024) {
-                    limit = 4;
-                }
-                const hiddenItems = allItems.slice(limit);
+                const isExpanded = roomsGrid.classList.contains('is-expanded');
+                
+                if (!isExpanded) {
+                    // Expand (Selengkapnya)
+                    const allItems = Array.from(roomsGrid.querySelectorAll('.room-card-item'));
+                    const width = window.innerWidth;
+                    let limit = 6;
+                    if (width < 640) {
+                        limit = 2;
+                    } else if (width < 1024) {
+                        limit = 4;
+                    }
+                    const hiddenItems = allItems.slice(limit);
 
-                roomsGrid.classList.add('is-expanded');
-                containerSelengkapnya.style.display = 'none';
+                    roomsGrid.classList.add('is-expanded');
+                    if (btnText) btnText.innerText = 'Lebih Sedikit';
+                    if (btnIcon) {
+                        btnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>';
+                        btnIcon.classList.remove('group-hover:translate-y-1');
+                        btnIcon.classList.add('group-hover:-translate-y-1');
+                    }
 
-                if (hiddenItems.length > 0 && typeof gsap !== 'undefined') {
-                    gsap.fromTo(hiddenItems, 
-                        { y: 30, opacity: 0 },
-                        { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" }
-                    );
+                    if (hiddenItems.length > 0 && typeof gsap !== 'undefined') {
+                        gsap.fromTo(hiddenItems, 
+                            { y: 30, opacity: 0 },
+                            { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" }
+                        );
+                    }
+                } else {
+                    // Collapse (Lebih Sedikit)
+                    roomsGrid.classList.remove('is-expanded');
+                    if (btnText) btnText.innerText = 'Selengkapnya';
+                    if (btnIcon) {
+                        btnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>';
+                        btnIcon.classList.add('group-hover:translate-y-1');
+                        btnIcon.classList.remove('group-hover:-translate-y-1');
+                    }
+                    
+                    // Scroll back to the section smoothly
+                    const section = document.getElementById('tipe-kamar');
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth' });
+                    }
                 }
             });
 
