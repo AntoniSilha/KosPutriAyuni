@@ -18,18 +18,18 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
-use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\View\Middleware\ShareErrorsFromSession; //use mengimpor file
 
-class AdminPanelProvider extends PanelProvider
+class AdminPanelProvider extends PanelProvider //mewarisi class PanelProvider
 {
-    public function panel(Panel $panel): Panel
+    public function panel(Panel $panel): Panel //method untuk mengkonfigurasi panel admin
     {
         return $panel
             ->default()
-            ->id('admin')
-            ->path('admin')
-            ->brandName('Putri Ayuni')
-            ->spa()
+            ->id('admin') //identifikasi panel admin
+            ->path('admin') //path untuk mengakses panel admin
+            ->brandName('Putri Ayuni') //mengubah nama merek yang ditampilkan di panel admin
+            ->spa() //single page aplikasi
             ->sidebarWidth('16rem')
             ->maxContentWidth(Width::Full)
             ->defaultThemeMode(ThemeMode::System)
@@ -43,7 +43,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
-                FilamentInfoWidget::class,
+                FilamentInfoWidget::class, //menampilkan widget informasi Filament di panel admin
             ])
             ->middleware([
                 EncryptCookies::class,

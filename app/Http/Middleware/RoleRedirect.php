@@ -14,14 +14,14 @@ class RoleRedirect
     public function handle(Request $request, Closure $next): Response
     {
         if (auth()->check()) {
-            $user = auth()->user();
+            $user = auth()->user(); //mengecek apakah pengguna sudah login dan mendapatkan data pengguna yang sedang login
 
             if ($user->isAdmin()) {
-                return redirect('/admin');
-            }
+                return redirect('/admin'); // jika role admin maka akan diarahkan ke halaman admin
+            } 
 
             if ($user->isPenghuni()) {
-                return redirect('/dashboard');
+                return redirect('/dashboard'); // jika role penghuni maka akan diarahkan ke halaman dashboard
             }
 
             // Regular user stays on landing page
